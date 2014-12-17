@@ -17,5 +17,5 @@ ggplot(df, aes(x=mpg, y=vs)) + geom_point() +
 plot(df$mpg, df$vs)
 curve(predict(logr.vm, data.frame(mpg=x), type="response"), add=TRUE) 
 @
-
+test
 \end{document}
