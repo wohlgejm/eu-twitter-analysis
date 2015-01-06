@@ -4,14 +4,16 @@
 \title{Exploring Variation in MEPs’ Adoption and Use of Twitter as a Representational Tool}
 \author{(author)}
 \maketitle
-<<logit, cache=TRUE>>=
+This is how to embed plots.
+
+<<logit, cache=TRUE, echo=FALSE>>=
 # Taken from http://www.cookbook-r.com/Statistical_analysis/Logistic_regression/
 library(ggplot2)
+library(xtable)
 data(mtcars)
 df <- subset(mtcars, select=c(mpg,am,vs))
 logr.vm <- glm(vs ~ mpg, data=df, family=binomial)
 logr.vm <- glm(vs ~ mpg, data=df, family=binomial(link="logit"))
-summary(logr.vm)
 
 ggplot(df, aes(x=mpg, y=vs)) + geom_point() + 
   stat_smooth(method="glm", family="binomial", se=FALSE)
@@ -20,5 +22,9 @@ ggplot(df, aes(x=mpg, y=vs)) + geom_point() +
 plot(df$mpg, df$vs)
 curve(predict(logr.vm, data.frame(mpg=x), type="response"), add=TRUE) 
 @
-test
+
+Here is how to make table using xtable.
+<<table_1, cache=TRUE, results='asis', echo=FALSE>>=
+xtable(summary(logr.vm))
+@
 \end{document}
