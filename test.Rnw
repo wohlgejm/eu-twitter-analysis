@@ -1,9 +1,31 @@
 \documentclass{article}
 
+\usepackage[backend=bibtex, sorting=none]{biblatex}
+\bibliography{references}
+
 \begin{document}
+
+<<setup, include=FALSE, cache=FALSE, echo=FALSE>>=
+# This will allow the use of the references.bib file
+# Credit for this goes to: http://texblog.org/2013/08/20/rknitr-automatic-bibliography-generation-with-biblatex-in-rstudio/
+Sys.setenv(TEXINPUTS=getwd(),
+           BIBINPUTS=getwd(),
+           BSTINPUTS=getwd())
+@
+
 \title{Exploring Variation in MEPs’ Adoption and Use of Twitter as a Representational Tool}
-\author{(author)}
+\author{John Scherpereel, Peg Schmelzinger, Jerry Wohlgemuth}
 \maketitle
+
+\begin{abstract}
+The abstract goes here.
+\end{abstract}
+\clearpage
+
+\section{Introduction}
+This is how cite\cite{ahu61} one reference. This is how cite\cite{ab94, m85} multiple references. All references are contained within the references.bib file. You can add more references to this file and they will only be used if they are called with the cite command within the document.
+
+\section{Findings}
 This is how to embed plots.
 
 <<logit, cache=TRUE, echo=FALSE>>=
@@ -27,5 +49,10 @@ Here is how to make a table using xtable.
 <<table_1, cache=TRUE, results='asis', echo=FALSE>>=
 xtable(summary(logr.vm))
 @
-test
+
+
+\clearpage
+
+\printbibliography
+
 \end{document}
