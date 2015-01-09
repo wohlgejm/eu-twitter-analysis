@@ -27,4 +27,5 @@ Here is how to make table using xtable.
 <<table_1, cache=TRUE, results='asis', echo=FALSE>>=
 xtable(summary(logr.vm))
 @
+test
 \end{document}
