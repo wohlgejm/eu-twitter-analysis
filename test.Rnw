@@ -47,6 +47,7 @@ curve(predict(logr.vm, data.frame(mpg=x), type="response"), add=TRUE)
 
 Here is how to make a table using xtable.
 <<table_1, cache=TRUE, results='asis', echo=FALSE>>=
+library(xtable)
 xtable(summary(logr.vm))
 @
 
