@@ -1,9 +1,9 @@
 Exploring Variation in MEPs’ Adoption and Use of Twitter as a Representational Tool
 ===================
-This is the research conducted by John Scherpereel, Peg Schmelzinger, Jerry Wohlgemuth for the paper *Exploring Variation in MEPs’ Adoption and Use of Twitter as a Representational Tool*. To reproduce our research, you can follow the tutorial below.
+This is the research conducted by John Scherpereel, Peg Schmelzinger, and Jerry Wohlgemuth for the paper *Exploring Variation in MEPs’ Adoption and Use of Twitter as a Representational Tool*. To reproduce our research you can compile the included Rnw document. To get started with RStudio and knitr, you can follow the tutorial below. Instructions are only available for OSX as of now. If you are not a collaborator, you will not be able to push your changes directly to the master branch. Instead, create your own fork to test it out.
 
 ####Getting started with RStudio and knitr on OSX
-This is a quick set of instructions to get up and running with RStudio, knitr and git on OSX. By the end of this tutorial, you should be ready to knit your R code into great looking LaTeX documents. We'll use one of my current Github projects as an example.
+This is a quick set of instructions to get up and running with RStudio, knitr and git on OSX. By the end of this tutorial, you should be ready to knit your R code into great looking LaTeX documents. We'll be using this Github project as an example.
 
 First, download MacTeX [here](http://mirror.ctan.org/systems/mac/mactex/MacTeX.pkg). This is a HUGE file, so while it downloads, start the next steps.
 
@@ -11,7 +11,7 @@ Next, get R from [here](http://cran.r-project.org/bin/macosx/R-3.1.2-snowleopard
 
 Then, get RStudio [here](http://download1.rstudio.org/RStudio-0.98.1091.dmg).
 
-Open open a terminal by going to Applications>Utilitiles>Terminal. You can now enter an R shell by opening up a terminal and typing "R". Once in the shell, run install.packages("ggplot2", "knitr"). We'll be using ggplot and knitr to compile our test document later.
+Open a terminal by going to Applications>Utilities>Terminal. You can now enter an R shell by opening up a terminal and typing "R". Once in the shell, run install.packages("ggplot2", "knitr"). We'll be using ggplot and knitr to compile our test document later.
 
 Open up RStudio. Now, we'll need to configure the IDE to use knitr rather than Sweave. Go to Tools>Global Options. Select Sweave from the right, and select knitr from the first drop down at the top that states "Weave Rnw files using:" Close RStudio when your finished.
 
@@ -32,3 +32,7 @@ You should now have the project loaded into RStudio successfully.
 Go ahead and make an update to the "test.Rnw" document . Click "Git" in the upper right hand panel. Here you'll see a list of files. You should see that "test.Rnw" now has a status of "Modified" indicated by a blue M. If you don't, click the save button in the top panel.
 
 Now that you've made this change, you'll want to commit it. First, check the box next to the file. Next, click "Commit" on the upper right hand panel. A window will launch showing you the changes you've made. Make sure to enter a "Commit Message" which should be an explanation of the change you made. After you've done that, click "Commit."
+
+Your changes have been saved locally, but haven't been saved in the Github to repository. Right now, there is a bug with RStudio that has to do with HTTPS, so you cannot use the "Push" command in the top right panel. We'll have to push our commits from the terminal. To do this, open a terminal, cd to the eu-twitter-analysis directory and run: git push. You will be prompted for your Github username and password. Once this is complete, your changes will be saved to the repository. If someone else has contributed during this time, you'll be prompted to merge your code. 
+
+To get the changes others have made to the repository, simply press "Pull" in the upper right hand panel to update the code base. 
