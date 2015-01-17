@@ -49,19 +49,25 @@ while (mongo.cursor.next(cur)) {
 }
 df <- data.frame(name, twitter_handle, twitter_birthday, gender, european_party, nationality, born, tweets, retweets, name_replies, status_replies, favorites)
 @
-<<descriptives_table, cache=TRUE, results='asis', echo=FALSE>>=
+Here's a quick look at our continuous variables.
+<<contin_variables, cache=TRUE, results='asis', echo=FALSE>>=
 library(xtable)
 xtable(summary(subset(df, select=c("tweets", "status_replies", "name_replies"))))
-party <- aggregate(list(Tweets=df$tweets), by=list("European Party"=df$european_party), FUN=sum)
-xtable(party)
-gender <- aggregate(list(Tweets=df$tweets, "Status Replies"=df$status_replies, "Name Replies"=df$name_replies), by=list("Gender"=df$gender), FUN=sum)
-xtable(gender)
 @
+The distribution of tweets by MEP.
+
 <<plots, echo=FALSE>>=
 hist(df$tweets)
 @
-
-
-
+<<tweets_by_party, cache=TRUE, results='asis', echo=FALSE>>=
+library(xtable)
+party <- aggregate(list(Tweets=df$tweets), by=list("European Party"=df$european_party), FUN=sum)
+xtable(party)
+@
+<<tweets_by_gender, cache=TRUE, results='asis', echo=FALSE>>=
+library(xtable)
+gender <- aggregate(list(Tweets=df$tweets, "Status Replies"=df$status_replies, "Name Replies"=df$name_replies), by=list("Gender"=df$gender), FUN=sum)
+xtable(gender)
+@
 
 \end{document}
