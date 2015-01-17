@@ -2,7 +2,7 @@ Exploring Variation in MEPs’ Adoption and Use of Twitter as a Representational
 ===================
 This is the research conducted by John Scherpereel, Peg Schmelzinger, and Jerry Wohlgemuth for the paper *Exploring Variation in MEPs’ Adoption and Use of Twitter as a Representational Tool*. To reproduce our research you can compile the included Rnw document. To get started with RStudio and knitr, you can follow the tutorial below. Instructions are only available for OSX as of now. If you are not a collaborator, you will not be able to push your changes directly to the master branch. Instead, create your own fork to test it out.
 
-####Getting started with RStudio and knitr on OSX
+###Getting started with RStudio and knitr on OSX
 This is a quick set of instructions to get up and running with RStudio, knitr and git on OSX. By the end of this tutorial, you should be ready to knit your R code into great looking LaTeX documents. We'll be using this Github project as an example.
 
 First, download MacTeX [here](http://mirror.ctan.org/systems/mac/mactex/MacTeX.pkg). This is a HUGE file, so while it downloads, start the next steps.
