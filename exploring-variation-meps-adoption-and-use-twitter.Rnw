@@ -1,8 +1,56 @@
 \documentclass{article}
 
 \begin{document}
-Testing John Scherpereel
+<<rmongo, cache=TRUE>>=
+library(rmongodb)
 
+host <- "research.jmu.rocks"
+username <- "public"
+password <- "public"
+db <- "eu_miner"
+
+mongo <- mongo.create(host=host, db=db, username=username, password=password)
+collection <- "eu_miner.reduced"
+mongo.is.connected(mongo)
+
+# Initialize empty vectors
+name <- c()
+twitter_handle <- c()
+twitter_birthday <- c()
+gender <- c()
+european_party <- c()
+nationality <- c()
+born <- c()
+total_tweets <- c()
+total_retweets <- c()
+total_screen_name_replies <- c()
+total_status_id_replies <- c()
+total_favorites <- c()
+
+cur <- mongo.find(mongo, collection)
+# Initerate through each entry in the cursor and append values to the vectors.
+# This is done to format the data neatly into a data frame
+# TODO: See if this can be done with the built in function. Main issue is unwinding the _id field.
+while (mongo.cursor.next(cur)) {
+  val <- mongo.bson.to.list(mongo.cursor.value(cur))
+  total_tweets <- c(total_tweets, val[["total_tweets"]])
+  total_retweets <- c(total_retweets, val[["total_retweets"]])
+  total_screen_name_replies <- c(total_screen_name_replies, val[["total_screen_name_replies"]])
+  total_status_id_replies <- c(total_status_id_replies, val[["total_status_id_replies"]])
+  total_favorites <- c(total_favorites, val[["total_favorites"]])
+  for (i in val["_id"]) {
+    name <- c(name, i[["name"]])
+    twitter_handle <- c(twitter_handle, i[["twitter_handle"]])
+    twitter_birthday <- c(twitter_birthday, i[["twitter_birthday"]])
+    gender <- c(gender, i[["gender"]])
+    european_party <- c(european_party, i[["european_party"]])
+    nationality <- c(nationality, i[["nationality"]])
+    born <- c(born, i[["born"]])
+  }
+}
+df <- data.frame(name, twitter_handle, twitter_birthday, gender, european_party, nationality, born, total_tweets, total_retweets, total_screen_name_replies, total_status_id_replies, total_favorites)
+print(summary(df))
+@
 
 
 
