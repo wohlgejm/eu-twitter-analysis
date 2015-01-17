@@ -1,7 +1,7 @@
 \documentclass{article}
 
 \begin{document}
-<<rmongo, cache=TRUE>>=
+<<rmongo, echo=FALSE>>=
 library(rmongodb)
 
 host <- "research.jmu.rocks"
@@ -11,7 +11,6 @@ db <- "eu_miner"
 
 mongo <- mongo.create(host=host, db=db, username=username, password=password)
 collection <- "eu_miner.reduced"
-mongo.is.connected(mongo)
 
 # Initialize empty vectors
 name <- c()
@@ -21,11 +20,11 @@ gender <- c()
 european_party <- c()
 nationality <- c()
 born <- c()
-total_tweets <- c()
-total_retweets <- c()
-total_screen_name_replies <- c()
-total_status_id_replies <- c()
-total_favorites <- c()
+tweets <- c()
+retweets <- c()
+name_replies <- c()
+status_replies <- c()
+favorites <- c()
 
 cur <- mongo.find(mongo, collection)
 # Initerate through each entry in the cursor and append values to the vectors.
@@ -33,11 +32,11 @@ cur <- mongo.find(mongo, collection)
 # TODO: See if this can be done with the built in function. Main issue is unwinding the _id field.
 while (mongo.cursor.next(cur)) {
   val <- mongo.bson.to.list(mongo.cursor.value(cur))
-  total_tweets <- c(total_tweets, val[["total_tweets"]])
-  total_retweets <- c(total_retweets, val[["total_retweets"]])
-  total_screen_name_replies <- c(total_screen_name_replies, val[["total_screen_name_replies"]])
-  total_status_id_replies <- c(total_status_id_replies, val[["total_status_id_replies"]])
-  total_favorites <- c(total_favorites, val[["total_favorites"]])
+  tweets <- c(tweets, val[["total_tweets"]])
+  retweets <- c(retweets, val[["total_retweets"]])
+  name_replies <- c(name_replies, val[["total_screen_name_replies"]])
+  status_replies <- c(status_replies, val[["total_status_id_replies"]])
+  favorites <- c(favorites, val[["total_favorites"]])
   for (i in val["_id"]) {
     name <- c(name, i[["name"]])
     twitter_handle <- c(twitter_handle, i[["twitter_handle"]])
@@ -48,9 +47,20 @@ while (mongo.cursor.next(cur)) {
     born <- c(born, i[["born"]])
   }
 }
-df <- data.frame(name, twitter_handle, twitter_birthday, gender, european_party, nationality, born, total_tweets, total_retweets, total_screen_name_replies, total_status_id_replies, total_favorites)
-print(summary(df))
+df <- data.frame(name, twitter_handle, twitter_birthday, gender, european_party, nationality, born, tweets, retweets, name_replies, status_replies, favorites)
 @
+<<descriptives_table, cache=TRUE, results='asis', echo=FALSE>>=
+library(xtable)
+xtable(summary(subset(df, select=c("tweets", "status_replies", "name_replies"))))
+party <- aggregate(list(Tweets=df$tweets), by=list("European Party"=df$european_party), FUN=sum)
+xtable(party)
+gender <- aggregate(list(Tweets=df$tweets, "Status Replies"=df$status_replies, "Name Replies"=df$name_replies), by=list("Gender"=df$gender), FUN=sum)
+xtable(gender)
+@
+<<plots, echo=FALSE>>=
+hist(df$tweets)
+@
+
 
 
 
