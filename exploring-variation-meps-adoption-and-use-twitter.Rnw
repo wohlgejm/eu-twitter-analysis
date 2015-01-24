@@ -64,7 +64,9 @@ print(xtable(df_ta), include.rownames=FALSE)
 @
 Number of MEPs on twitter, by country. The table is sorted by the percentage of MEPs for a country that aren't on Twitter. It would be interesting to investigate further what is causing the adoption rates here to vary. We could start to incorporate country level statistics into our data.
 
-<<twitter_adoption_country, echo=FALSE, cache=FALSE, message=FALSE, results='asis'>>=
+The countries twitter adoption rate has no impact on the overall number of tweets, evident in the plot below.
+
+<<twitter_adoption_country, echo=FALSE, cache=FALSE, message=FALSE, results='asis', fig.width=5, fig.height=5, fig.align='center'>>=
 library(xtable)
 library(sqldf)
 df_ta_c_ <- sqldf("SELECT nationality, SUM(CASE WHEN tweets>0 THEN 1
@@ -77,15 +79,15 @@ df_ta_c_ <- sqldf("SELECT nationality, SUM(CASE WHEN tweets>0 THEN 1
 df_ta_c <- sqldf("SELECT nationality,
                  on_twitter,
                  off_twitter,
-                 ((off_twitter*1.0)/(on_twitter + off_twitter)) * 100 AS percent_off,
+                 ((on_twitter*1.0)/(on_twitter + off_twitter)) * 100 AS percent_on,
                  tweets
                  FROM df_ta_c_
                  GROUP BY 1,2,3,5")
-print(xtable(df_ta_c[with(df_ta_c, order(-percent_off)),], digits=c(0,0,0,0,0,0)), include.rownames=FALSE)
+print(xtable(df_ta_c[with(df_ta_c, order(-percent_on)),], digits=c(0,0,0,0,0,0)), include.rownames=FALSE)
 @
 Here is the same table as above except it examines rates amount European Party. It is pretty clear here that the left is more likely to be on Twitter than the right. 
 
-<<twitter_adoption_party, echo=FALSE, cache=FALSE, message=FALSE, results='asis'>>=
+<<twitter_adoption_party, echo=FALSE, cache=FALSE, message=FALSE, results='asis', fig.width=5, fig.height=5, fig.align='center'>>=
 library(xtable)
 library(sqldf)
 
@@ -110,11 +112,11 @@ df_ta_e_$european_party <- sapply(df_ta_e_$european_party, trunc)
 df_ta_e <- sqldf("SELECT european_party,
                  on_twitter,
                  off_twitter,
-                 ((off_twitter*1.0)/(on_twitter + off_twitter)) * 100 AS percent_off,
+                 ((on_twitter*1.0)/(on_twitter + off_twitter)) * 100 AS percent_on,
                  tweets
                  FROM df_ta_e_
                  GROUP BY 1,2,3,5")
-print(xtable(df_ta_e[with(df_ta_e, order(-percent_off)),], digits=c(0,0,0,0,0,0)), include.rownames=FALSE)
+print(xtable(df_ta_e[with(df_ta_e, order(-percent_on)),], digits=c(0,0,0,0,0,0)), include.rownames=FALSE)
 @
 These are the most profilic users during the timeframe of our study. It's interesting because this doesn't perfectly line up with the overall most prolific users from what I've seen. I'm having an issue with the date format from age. I will add it to this table as soon as I resolve the issue.
 
@@ -140,6 +142,7 @@ library(xtable)
 df_ta_tr <- sqldf("SELECT name
                  , SUM(tweets) AS tweets
                  , SUM(retweets) AS retweets
+                 , SUM(name_replies) AS replies
                FROM df
                GROUP BY 1")
 #cor(df_ta_tr, use="all.obs", method="pearson")
@@ -150,10 +153,36 @@ There isn't a strong correlation between retweets and overall tweets. The red li
 
 I am interested in this relationship and it might be a point that we investigate further. We could potentially pick a small subset of tweets by MEPs, and track them individually over time to see how they evolve. Since this would be a small subset, we could also likely track details about the individual users that retweeted the tweet and profile them.
 
-<<twitter_adoption_user_plot, echo=FALSE, cache=FALSE, message=FALSE>>=
+<<twitter_adoption_user_plot, echo=FALSE, cache=FALSE, message=FALSE, fig.width=5, fig.height=5, fig.align='center'>>=
 plot(df_ta_tr$tweets, df_ta_tr$retweets)
 abline(lm(df_ta_tr$tweets~df_ta_tr$retweets), col="red") #regression
 lines(lowess(df_ta_tr$tweets, df_ta_tr$retweets), col="blue") #lowess
 @
 
+This table shows the most prolific repliers. 
+
+<<twitter_adoption_user_replies, echo=FALSE, cache=FALSE, message=FALSE, results='asis', strip.white=TRUE>>=
+library(xtable)
+library(sqldf)
+df_ta_u2 <- sqldf("SELECT name
+                 , nationality
+                 , CAST(STRFTIME('%Y.%m%d', 'now') - STRFTIME('%Y.%m%d', born) AS int) AS age
+                 , SUM(tweets) AS tweets
+                 , SUM(retweets) AS retweets
+                 , SUM(status_replies) AS status_replies
+                 , SUM(name_replies) AS name_replies
+               FROM df
+               GROUP BY 1,2,3
+               ORDER BY name_replies DESC
+               LIMIT 10")
+print(xtable(df_ta_u2[with(df_ta_u2, order(-name_replies)),]), include.rownames=FALSE, floating=FALSE)
+@
+
+Here are the total number of tweets plotted against the number of replies. There are two type of replies, replies to statuses and replies to screen names. A reply to a screen name is always a reply to a status. 
+
+<<twitter_cor_tweets_replies, echo=FALSE, cache=FALSE, message=FALSE, fig.width=5, fig.height=5, fig.align='center'>>=
+plot(df_ta_tr$tweets, df_ta_tr$replies)
+abline(lm(df_ta_tr$tweets~df_ta_tr$replies), col="red") #regression
+lines(lowess(df_ta_tr$tweets, df_ta_tr$replies), col="blue") #lowess
+@
 \end{document}
