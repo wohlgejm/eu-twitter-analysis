@@ -70,16 +70,18 @@ library(sqldf)
 df_ta_c_ <- sqldf("SELECT nationality, SUM(CASE WHEN tweets>0 THEN 1
                ELSE 0 END) AS on_twitter,
                SUM(CASE WHEN tweets < 1 THEN 1
-               ELSE 0 END) AS off_twitter
+               ELSE 0 END) AS off_twitter,
+               SUM(tweets) AS tweets
                FROM df
                GROUP BY nationality")
 df_ta_c <- sqldf("SELECT nationality,
                  on_twitter,
                  off_twitter,
-                 ((off_twitter*1.0)/(on_twitter + off_twitter)) * 100 AS percent_off
+                 ((off_twitter*1.0)/(on_twitter + off_twitter)) * 100 AS percent_off,
+                 tweets
                  FROM df_ta_c_
-                 GROUP BY 1,2,3")
-print(xtable(df_ta_c[with(df_ta_c, order(-percent_off)),]), include.rownames=FALSE)
+                 GROUP BY 1,2,3,5")
+print(xtable(df_ta_c[with(df_ta_c, order(-percent_off)),], digits=c(0,0,0,0,0,0)), include.rownames=FALSE)
 @
 Here is the same table as above except it examines rates amount European Party. It is pretty clear here that the left is more likely to be on Twitter than the right. 
 
@@ -100,17 +102,19 @@ trunc <- function(text) {
 df_ta_e_ <- sqldf("SELECT european_party, SUM(CASE WHEN tweets>0 THEN 1
                ELSE 0 END) AS on_twitter,
                SUM(CASE WHEN tweets < 1 THEN 1
-               ELSE 0 END) AS off_twitter
+               ELSE 0 END) AS off_twitter,
+               SUM(tweets) AS tweets
                FROM df
                GROUP BY european_party")
 df_ta_e_$european_party <- sapply(df_ta_e_$european_party, trunc)
 df_ta_e <- sqldf("SELECT european_party,
                  on_twitter,
                  off_twitter,
-                 ((off_twitter*1.0)/(on_twitter + off_twitter)) * 100 AS percent_off
+                 ((off_twitter*1.0)/(on_twitter + off_twitter)) * 100 AS percent_off,
+                 tweets
                  FROM df_ta_e_
-                 GROUP BY 1,2,3")
-print(xtable(df_ta_e[with(df_ta_e, order(-percent_off)),]), include.rownames=FALSE)
+                 GROUP BY 1,2,3,5")
+print(xtable(df_ta_e[with(df_ta_e, order(-percent_off)),], digits=c(0,0,0,0,0,0)), include.rownames=FALSE)
 @
 These are the most profilic users during the timeframe of our study. It's interesting because this doesn't perfectly line up with the overall most prolific users from what I've seen. I'm having an issue with the date format from age. I will add it to this table as soon as I resolve the issue.
 
