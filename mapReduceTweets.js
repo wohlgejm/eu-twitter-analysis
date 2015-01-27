@@ -34,6 +34,8 @@ var stageFunc = function(meps) {
               favorites: _tweet.favorite_count,
               in_reply_to_screen_name: checkReply(_tweet.in_reply_to_screen_name),
               in_reply_to_status_id: checkReply(_tweet.in_reply_to_status_id),
+              text: _tweet.text,
+              tweet_id: _id
             
           }
             );
