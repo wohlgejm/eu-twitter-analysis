@@ -118,7 +118,7 @@ df_ta_e <- sqldf("SELECT european_party,
                  GROUP BY 1,2,3,5")
 print(xtable(df_ta_e[with(df_ta_e, order(-percent_on)),], digits=c(0,0,0,0,0,0)), include.rownames=FALSE)
 @
-These are the most profilic users during the timeframe of our study. It's interesting because this doesn't perfectly line up with the overall most prolific users from what I've seen. I'm having an issue with the date format from age. I will add it to this table as soon as I resolve the issue.
+These are the most prolific users during the time frame of our study. It's interesting because this doesn't perfectly line up with the overall most prolific users from what I've seen. I'm having an issue with the date format from age. I will add it to this table as soon as I resolve the issue.
 
 <<twitter_adoption_user, echo=FALSE, cache=FALSE, message=FALSE, results='asis', strip.white=TRUE>>=
 library(xtable)
