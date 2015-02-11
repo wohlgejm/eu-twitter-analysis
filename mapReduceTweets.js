@@ -21,7 +21,7 @@ var stageFunc = function(meps) {
         if(_tweet) {
           valid_tweets += 1;
           if(mep.native_lang == _tweet.lang) {
-            var native_lange = 1;
+            var native_lang = 1;
             var non_native_lang = 0;
           }
           else {
@@ -30,6 +30,7 @@ var stageFunc = function(meps) {
           }
           db.staging.insert({
               name: mep.name,
+              native_lang: mep.native_lang,
               twitter_handle: mep.twitter_handle,
               twitter_birthday: mep.twitter_birthday,
               gender: mep.gender,
@@ -44,7 +45,7 @@ var stageFunc = function(meps) {
               in_reply_to_status_id: checkReply(_tweet.in_reply_to_status_id),
               text: _tweet.text,
               tweet_id: _tweet._id,
-              native_lang: native_lang,
+              native_lang_tweet: native_lang,
               non_native_lang: non_native_lang,
           }
             );
@@ -53,6 +54,7 @@ var stageFunc = function(meps) {
       if(valid_tweets == 0) {
               db.staging.insert({
               name: mep.name,
+              native_lang: mep.native_lang,
               twitter_handle: mep.twitter_handle,
               twitter_birthday: mep.twitter_birthday,
               gender: mep.gender,
@@ -65,7 +67,7 @@ var stageFunc = function(meps) {
               favorites: 0,
               in_reply_to_screen_name: 0,
               in_reply_to_status_id: 0,
-              native_lang: 0,
+              native_lang_tweet: 0,
               non_native_lang: 0,
             
           }
@@ -74,6 +76,7 @@ var stageFunc = function(meps) {
     } else {
       db.staging.insert({
               name: mep.name,
+              native_lang: mep.native_lang,
               twitter_handle: mep.twitter_handle,
               twitter_birthday: mep.twitter_birthday,
               gender: mep.gender,
@@ -86,7 +89,7 @@ var stageFunc = function(meps) {
               favorites: 0,
               in_reply_to_screen_name: 0,
               in_reply_to_status_id: 0,
-              native_lang: 0,
+              native_lang_tweet: 0,
               non_native_lang: 0,            
           }
         );
@@ -103,7 +106,8 @@ var mapFunc = function() {
       european_party: this.european_party,
       domestic_party: this.domestic_party,
       nationality: this.nationality,
-      born: this.born
+      born: this.born,
+      navtive_lang: this.native_lang,
   }, 
   {
     tweets: this.tweets,
@@ -149,13 +153,16 @@ db.staging.aggregate({
     european_party: "$european_party",
     domestic_party: "$domesitc_party",
     nationality: "$nationality",
-    born: "$born"
+    born: "$born",
+    native_lang: "$native_lang"
     },
   total_tweets: {$sum: "$tweets"},
   total_retweets: {$sum: "$retweets"},
   total_screen_name_replies: {$sum: "$in_reply_to_screen_name"},
   total_status_id_replies: {$sum: "$in_reply_to_status_id"},
-  total_favorites: {$sum: "$favorites"}
+  total_favorites: {$sum: "$favorites"},
+  total_native: {$sum: "$native_lang_tweet"},
+  total_non_native: {$sum: "$non_native_lang"}
   }
 }, 
 {
