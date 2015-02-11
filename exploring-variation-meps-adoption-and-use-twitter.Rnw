@@ -1,99 +1,16 @@
 \documentclass{article}
 \usepackage[margin=0.5in]{geometry}
-\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
 \begin{document}
-<<rmongo, echo=FALSE>>=
-library(rmongodb)
 
-host <- "research.jmu.rocks"
-username <- "public"
-password <- "public"
-db <- "eu_miner"
-
-mongo <- mongo.create(host=host, db=db, username=username, password=password)
-collection <- "eu_miner.reduced"
-
-# Initialize empty vectors
-name <- c()
-twitter_handle <- c()
-twitter_birthday <- c()
-gender <- c()
-european_party <- c()
-nationality <- c()
-born <- c()
-tweets <- c()
-retweets <- c()
-name_replies <- c()
-status_replies <- c()
-favorites <- c()
-
-cur <- mongo.find(mongo, collection)
-# Initerate through each entry in the cursor and append values to the vectors.
-# This is done to format the data neatly into a data frame
-# TODO: See if this can be done with the built in function. Main issue is unwinding the _id field.
-while (mongo.cursor.next(cur)) {
-  val <- mongo.bson.to.list(mongo.cursor.value(cur))
-  tweets <- c(tweets, val[["total_tweets"]])
-  retweets <- c(retweets, val[["total_retweets"]])
-  name_replies <- c(name_replies, val[["total_screen_name_replies"]])
-  status_replies <- c(status_replies, val[["total_status_id_replies"]])
-  favorites <- c(favorites, val[["total_favorites"]])
-  for (i in val["_id"]) {
-    name <- c(name, i[["name"]])
-    twitter_handle <- c(twitter_handle, i[["twitter_handle"]])
-    twitter_birthday <- c(twitter_birthday, i[["twitter_birthday"]])
-    gender <- c(gender, i[["gender"]])
-    european_party <- c(european_party, i[["european_party"]])
-    nationality <- c(nationality, i[["nationality"]])
-    born <- c(born, i[["born"]])
-  }
-}
-df <- data.frame(name, twitter_handle, twitter_birthday, gender, european_party, nationality, born, tweets, retweets, name_replies, status_replies, favorites)
-@
-The majority, 69\%, of MEPs have a presence on Twitter. 
-<<twitter_adoption, message=FALSE, cache=FALSE, results='asis', echo=FALSE>>=
-library(xtable)
+<<table_1, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 library(sqldf)
-df_ta <- sqldf("SELECT 
-                SUM(CASE WHEN tweets>0 THEN 1
-               ELSE 0 END) AS on_twitter,
-               SUM(CASE WHEN tweets < 1 THEN 1
-               ELSE 0 END) AS off_twitter
-                FROM df")
-print(xtable(df_ta), include.rownames=FALSE)
-@
-Number of MEPs on twitter, by country. The table is sorted by the percentage of MEPs for a country that aren't on Twitter. It would be interesting to investigate further what is causing the adoption rates here to vary. We could start to incorporate country level statistics into our data.
-
-The countries twitter adoption rate has no impact on the overall number of tweets, evident in the plot below.
-
-<<twitter_adoption_country, echo=FALSE, cache=FALSE, message=FALSE, results='asis', fig.width=5, fig.height=5, fig.align='center'>>=
 library(xtable)
-library(sqldf)
-df_ta_c_ <- sqldf("SELECT nationality, SUM(CASE WHEN tweets>0 THEN 1
-               ELSE 0 END) AS on_twitter,
-               SUM(CASE WHEN tweets < 1 THEN 1
-               ELSE 0 END) AS off_twitter,
-               SUM(tweets) AS tweets
-               FROM df
-               GROUP BY nationality")
-df_ta_c <- sqldf("SELECT nationality,
-                 on_twitter,
-                 off_twitter,
-                 ((on_twitter*1.0)/(on_twitter + off_twitter)) * 100 AS percent_on,
-                 tweets
-                 FROM df_ta_c_
-                 GROUP BY 1,2,3,5")
-print(xtable(df_ta_c[with(df_ta_c, order(-percent_on)),], digits=c(0,0,0,0,0,0)), include.rownames=FALSE)
-@
-Here is the same table as above except it examines rates amount European Party. It is pretty clear here that the left is more likely to be on Twitter than the right. 
-
-<<twitter_adoption_party, echo=FALSE, cache=FALSE, message=FALSE, results='asis', fig.width=5, fig.height=5, fig.align='center'>>=
-library(xtable)
-library(sqldf)
 
 trunc <- function(text) {
   text <- as.character(text)
-  max_len <- 50
+  max_len <- 20
   if (nchar(text) > max_len) {
     truncated <- substr(text, 0, max_len)
     return(paste(truncated, "...", sep=""))
@@ -101,88 +18,89 @@ trunc <- function(text) {
     return(text)
   }
 }
-df_ta_e_ <- sqldf("SELECT european_party, SUM(CASE WHEN tweets>0 THEN 1
-               ELSE 0 END) AS on_twitter,
-               SUM(CASE WHEN tweets < 1 THEN 1
-               ELSE 0 END) AS off_twitter,
-               SUM(tweets) AS tweets
-               FROM df
-               GROUP BY european_party")
-df_ta_e_$european_party <- sapply(df_ta_e_$european_party, trunc)
-df_ta_e <- sqldf("SELECT european_party,
-                 on_twitter,
-                 off_twitter,
-                 ((on_twitter*1.0)/(on_twitter + off_twitter)) * 100 AS percent_on,
-                 tweets
-                 FROM df_ta_e_
-                 GROUP BY 1,2,3,5")
-print(xtable(df_ta_e[with(df_ta_e, order(-percent_on)),], digits=c(0,0,0,0,0,0)), include.rownames=FALSE)
-@
-These are the most prolific users during the time frame of our study. It's interesting because this doesn't perfectly line up with the overall most prolific users from what I've seen. I'm having an issue with the date format from age. I will add it to this table as soon as I resolve the issue.
 
-<<twitter_adoption_user, echo=FALSE, cache=FALSE, message=FALSE, results='asis', strip.white=TRUE>>=
-library(xtable)
+party <- function(party) {
+  if (party == "Group of the Greens/European Free Alliance") {
+    return("Greens-EFA")
+  } else if (party == "Group of the Alliance of Liberals and Democrats for Europe") {
+    return("ALDE")
+  } else if (party == "Confederal Group of the European United Left - Nordic Green Left") {
+    return("GUE-NGL")
+  } else if (party == "Group of the Progressive Alliance of Socialists and Democrats in the European Parliament") {
+    return("S&D")
+  } else if (party == "Group of the European People's Party (Christian Democrats)") {
+    return("EPP")
+  } else if (party == "Europe of freedom and direct democracy Group") {
+    return("EFDD")
+  } else if (party == "European Conservatives and Reformists Group") {
+    return("ECR")
+  } else if (party == "Non-attached Members") {
+    return("NI")
+  }
+}
+
+mepColumn <- function(df) {
+  if(length(df$name) > 1) {
+    return(length(df$name))
+  } else {
+    text <- paste(df[1, 6, drop=TRUE], " (", party(df[1, 1, drop=TRUE]), ", ", trunc(df[1, 17, drop=TRUE]), ")", sep="")
+    return(text)
+  }
+}
+
+workdir <- getwd()
+df <- read.csv(paste(workdir, "/reduced_output.csv", sep=""))
+df$twitter_birthday <- as.Date(df$twitter_birthday)
+
+meps_using_twitter <- length(subset(df$twitter_handle, df$twitter_handle != ""))
+
+oldest_twitter_birthday <- min(df$twitter_birthday, na.rm=TRUE)
+mep_oldest_twitter_birthday <- subset(df, df$twitter_birthday == oldest_twitter_birthday)
+mep_oldest_twitter_birthday <- mepColumn(mep_oldest_twitter_birthday)
+
+youngest_twitter_birthday <- max(df$twitter_birthday, na.rm=TRUE)
+mep_youngest_twitter_birthday <- subset(df, df$twitter_birthday == youngest_twitter_birthday)
+mep_youngest_twitter_birthday <- mepColumn(mep_youngest_twitter_birthday)
+
+mean_twitter_birthday <- mean(df$twitter_birthday, na.rm=TRUE)
+
+min_number_of_tweets <- min(subset(df$total_tweets, df$twitter_handle != ""))
+mep_min_number_of_tweets <- subset(df, df$total_tweets == min_number_of_tweets)
+mep_min_number_of_tweets <- mepColumn(mep_min_number_of_tweets)
+
+max_number_of_tweets <- max(df$total_tweets, na.rm=TRUE)
+mep_max_number_of_tweets <- subset(df, df$total_tweets == max_number_of_tweets)
+mep_max_number_of_tweets <- mepColumn(mep_max_number_of_tweets)
+
+mean_number_of_tweets <- mean(subset(df$total_tweets, df$twitter_handle != ""))
+
+median_number_of_tweets <- median(subset(df$total_tweets, df$twitter_handle != ""))
+
+headers <- c("Number of MEPs using twitter", 'Oldest twitter "birthday"', 'Youngest twitter "birthday"', 'Mean twitter "birthday"', "Min. number of tweets", "Max. number of tweets", "Mean number of tweets", "Median number of tweets")
+output <- c(meps_using_twitter, oldest_twitter_birthday, youngest_twitter_birthday, mean_twitter_birthday, min_number_of_tweets, max_number_of_tweets, mean_number_of_tweets, median_number_of_tweets)
+mep <- c("N/A", mep_oldest_twitter_birthday, mep_youngest_twitter_birthday, "N/A", mep_min_number_of_tweets, mep_max_number_of_tweets, "N/A", "N/A")
+
+table_1 <- data.frame(headers, output, mep)
+colnames(table_1) <- c("", "Result", "Corresponding MEP or count")
+print(xtable(table_1, includecolnames=FALSE))
+@
+
+<<table_4, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 library(sqldf)
-df_ta_u <- sqldf("SELECT name
-                 , nationality
-                 , CAST(STRFTIME('%Y.%m%d', 'now') - STRFTIME('%Y.%m%d', born) AS int) AS age
-                 , SUM(tweets) AS tweets
-                 , SUM(retweets) AS retweets
-                 , SUM(status_replies) AS status_replies
-                 , SUM(name_replies) AS name_replies
-               FROM df
-               GROUP BY 1,2,3
-               ORDER BY tweets DESC
-               LIMIT 10")
-print(xtable(df_ta_u[with(df_ta_u, order(-tweets)),]), include.rownames=FALSE, floating=FALSE)
-@
-<<twitter_cor_tweets_retweets, echo=FALSE, cache=FALSE, message=FALSE, results='asis'>>=
-library(sqldf)
-library(xtable)
-df_ta_tr <- sqldf("SELECT name
-                 , SUM(tweets) AS tweets
-                 , SUM(retweets) AS retweets
-                 , SUM(name_replies) AS replies
-               FROM df
-               GROUP BY 1")
-#cor(df_ta_tr, use="all.obs", method="pearson")
+min_number_of_replies <- min(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+
+max_number_of_replies <- max(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+
+mean_number_of_replies <- mean(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+
+median_number_of_replies <- median(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+
+headers <- c("Min. number of @-replies", "Max. number of @-replies", "Mean number of @-replies", "Median number of @-replies")
+output <- c(min_number_of_replies, max_number_of_replies, mean_number_of_replies, median_number_of_replies)
+
+table_4 <- data.frame(headers, output)
+print(xtable(table_4))
 @
 
 
-There isn't a strong correlation between retweets and overall tweets. The red line shows a regression fit line and the blue shows LOWESS. It's important to note that retweets are a point in time variable. This variable could change if we went back to the API and got the tweet again. For example, if we captured a tweet in the morning and it was retweeted heavily in the afternoon, we would not capture those retweets.
-
-I am interested in this relationship and it might be a point that we investigate further. We could potentially pick a small subset of tweets by MEPs, and track them individually over time to see how they evolve. Since this would be a small subset, we could also likely track details about the individual users that retweeted the tweet and profile them.
-
-<<twitter_adoption_user_plot, echo=FALSE, cache=FALSE, message=FALSE, fig.width=5, fig.height=5, fig.align='center'>>=
-plot(df_ta_tr$tweets, df_ta_tr$retweets)
-abline(lm(df_ta_tr$tweets~df_ta_tr$retweets), col="red") #regression
-lines(lowess(df_ta_tr$tweets, df_ta_tr$retweets), col="blue") #lowess
-@
-
-This table shows the most prolific repliers. 
-
-<<twitter_adoption_user_replies, echo=FALSE, cache=FALSE, message=FALSE, results='asis', strip.white=TRUE>>=
-library(xtable)
-library(sqldf)
-df_ta_u2 <- sqldf("SELECT name
-                 , nationality
-                 , CAST(STRFTIME('%Y.%m%d', 'now') - STRFTIME('%Y.%m%d', born) AS int) AS age
-                 , SUM(tweets) AS tweets
-                 , SUM(retweets) AS retweets
-                 , SUM(status_replies) AS status_replies
-                 , SUM(name_replies) AS name_replies
-               FROM df
-               GROUP BY 1,2,3
-               ORDER BY name_replies DESC
-               LIMIT 10")
-print(xtable(df_ta_u2[with(df_ta_u2, order(-name_replies)),]), include.rownames=FALSE, floating=FALSE)
-@
-
-Here are the total number of tweets plotted against the number of replies. There are two type of replies, replies to statuses and replies to screen names. A reply to a screen name is always a reply to a status. 
-
-<<twitter_cor_tweets_replies, echo=FALSE, cache=FALSE, message=FALSE, fig.width=5, fig.height=5, fig.align='center'>>=
-plot(df_ta_tr$tweets, df_ta_tr$replies)
-abline(lm(df_ta_tr$tweets~df_ta_tr$replies), col="red") #regression
-lines(lowess(df_ta_tr$tweets, df_ta_tr$replies), col="blue") #lowess
-@
 \end{document}
