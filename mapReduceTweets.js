@@ -20,6 +20,14 @@ var stageFunc = function(meps) {
     	  _tweet = db.tweet.findOne({_id: i, tweeted_at: {"$gte": start_date, "$lte": end_date}});
         if(_tweet) {
           valid_tweets += 1;
+          if(mep.native_lang == _tweet.lang) {
+            var native_lange = 1;
+            var non_native_lang = 0;
+          }
+          else {
+            var native_lang = 0;
+            var non_native_lang = 1;
+          }
           db.staging.insert({
               name: mep.name,
               twitter_handle: mep.twitter_handle,
@@ -35,8 +43,9 @@ var stageFunc = function(meps) {
               in_reply_to_screen_name: checkReply(_tweet.in_reply_to_screen_name),
               in_reply_to_status_id: checkReply(_tweet.in_reply_to_status_id),
               text: _tweet.text,
-              tweet_id: _tweet._id
-            
+              tweet_id: _tweet._id,
+              native_lang: native_lang,
+              non_native_lang: non_native_lang,
           }
             );
         }
@@ -56,6 +65,8 @@ var stageFunc = function(meps) {
               favorites: 0,
               in_reply_to_screen_name: 0,
               in_reply_to_status_id: 0,
+              native_lang: 0,
+              non_native_lang: 0,
             
           }
         );
@@ -75,7 +86,8 @@ var stageFunc = function(meps) {
               favorites: 0,
               in_reply_to_screen_name: 0,
               in_reply_to_status_id: 0,
-            
+              native_lang: 0,
+              non_native_lang: 0,            
           }
         );
     }
