@@ -1,0 +1,170 @@
+\documentclass{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage{float}
+\begin{document}
+
+<<table_1, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+library(xtable)
+
+days <- 90
+
+trunc <- function(text) {
+  text <- as.character(text)
+  max_len <- 20
+  if (nchar(text) > max_len) {
+    truncated <- substr(text, 0, max_len)
+    return(paste(truncated, "...", sep=""))
+  } else {
+    return(text)
+  }
+}
+
+party <- function(party) {
+  if (party == "Group of the Greens/European Free Alliance") {
+    return("Greens-EFA")
+  } else if (party == "Group of the Alliance of Liberals and Democrats for Europe") {
+    return("ALDE")
+  } else if (party == "Confederal Group of the European United Left - Nordic Green Left") {
+    return("GUE-NGL")
+  } else if (party == "Group of the Progressive Alliance of Socialists and Democrats in the European Parliament") {
+    return("S&D")
+  } else if (party == "Group of the European People's Party (Christian Democrats)") {
+    return("EPP")
+  } else if (party == "Europe of freedom and direct democracy Group") {
+    return("EFDD")
+  } else if (party == "European Conservatives and Reformists Group") {
+    return("ECR")
+  } else if (party == "Non-attached Members") {
+    return("NI")
+  }
+}
+
+mepColumn <- function(df) {
+  if(length(df$name) > 1) {
+    return(length(df$name))
+  } else {
+    text <- paste(df[1, 'name', drop=TRUE], " (", party(df[1, 'european_party', drop=TRUE]), ", ", trunc(df[1, 'nationality', drop=TRUE]), ")", sep="")
+    return(text)
+  }
+}
+
+workdir <- getwd()
+df <- read.csv(paste(workdir, "/reduced_output.csv", sep=""))
+df$twitter_birthday <- as.Date(df$twitter_birthday, "%Y-%m-%d %H:%M:%S")
+
+meps_using_twitter <- length(subset(df$twitter_handle, df$twitter_handle != ""))
+
+oldest_twitter_birthday <- min(df$twitter_birthday, na.rm=TRUE)
+mep_oldest_twitter_birthday <- subset(df, df$twitter_birthday == oldest_twitter_birthday)
+mep_oldest_twitter_birthday <- mepColumn(mep_oldest_twitter_birthday)
+
+youngest_twitter_birthday <- max(df$twitter_birthday, na.rm=TRUE)
+mep_youngest_twitter_birthday <- subset(df, df$twitter_birthday == youngest_twitter_birthday)
+mep_youngest_twitter_birthday <- mepColumn(mep_youngest_twitter_birthday)
+
+mean_twitter_birthday <- mean(df$twitter_birthday, na.rm=TRUE)
+
+df$mean_tweets <- sapply(df$total_tweets, function(x) x/days)
+
+min_number_of_tweets <- min(subset(df$mean_tweets, df$twitter_handle != ""))
+mep_min_number_of_tweets <- subset(df, df$mean_tweets == min_number_of_tweets)
+mep_min_number_of_tweets <- mepColumn(mep_min_number_of_tweets)
+
+max_number_of_tweets <- max(df$mean_tweets, na.rm=TRUE)
+mep_max_number_of_tweets <- mepColumn(subset(df, df$mean_tweets == max_number_of_tweets))
+
+getNearest <- function(x, vec) {
+  idx <- which.min(abs(vec - x))
+  return(df[idx, ])
+}
+
+mean_number_of_tweets <- mean(subset(df$total_tweets, df$twitter_handle != ""))
+mep_mean_number_of_tweets <- mepColumn(getNearest(mean_number_of_tweets, df$total_tweets))
+
+median_number_of_tweets <- median(subset(df$total_tweets, df$twitter_handle != ""))
+mep_median_number_of_tweets <- mepColumn(getNearest(median_number_of_tweets, df$total_tweets))
+
+headers <- c("Number of MEPs using twitter", 'Oldest twitter "birthday"', 'Youngest twitter "birthday"', 'Mean twitter "birthday"', "Min. number of tweets per day (mean)", "Max. number of tweets per day (mean)", "Total number of tweets (mean)", "Total number of tweets (median)")
+output <- c(meps_using_twitter, as.character(oldest_twitter_birthday), as.character(youngest_twitter_birthday), as.character(mean_twitter_birthday), min_number_of_tweets, round(max_number_of_tweets, 1), round(mean_number_of_tweets, 1), round(median_number_of_tweets, 1))
+mep <- c("N/A", mep_oldest_twitter_birthday, mep_youngest_twitter_birthday, "N/A", mep_min_number_of_tweets, mep_max_number_of_tweets, mep_mean_number_of_tweets, mep_median_number_of_tweets)
+
+table_1 <- data.frame(headers, output, mep)
+colnames(table_1) <- c("Item", "Result", "Corresponding MEP or count")
+print(xtable(table_1, caption="MEPs' Tweet Behavior"), include.rownames=FALSE, caption.placement="top", table.placement="H")
+@
+
+<<table_2, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+party_group <- aggregate(mean_tweets ~ european_party, df, median)
+party_group$european_party <- sapply(party_group$european_party, party)
+party_group <- party_group[order(-party_group$mean_tweets), ]
+party_group$mean_tweets <- round(party_group$mean_tweets, 1)
+colnames(party_group) <- c("Party group", "Median number of tweets per MEP per day")
+print(xtable(party_group, digits=c(0,0,1), caption="MEPs' Tweet Behavior by EP Party Group"), floating=TRUE, include.rownames=FALSE, caption.placement="top", table.placement="H")
+@
+
+<<table_3, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+state_group <- aggregate(mean_tweets ~ nationality, df, median)
+state_group <- state_group[order(-state_group$mean_tweets), ]
+state_group$mean_tweets <- round(state_group$mean_tweets, 1)
+colnames(state_group) <- c("Member state", "Median number of tweets per MEP per day")
+print(xtable(state_group, digits=c(0,0,1), caption="MEPs' Tweet Behavior by Member State"), floating=TRUE, include.rownames=FALSE, caption.placement="top", table.placement="H")
+@
+
+
+<<table_4, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+min_number_of_replies <- min(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+mep_min_number_of_replies <- subset(df, df$total_status_id_replies == min_number_of_replies)
+mep_min_number_of_replies <- mepColumn(mep_min_number_of_replies)
+
+max_number_of_replies <- max(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+mep_max_number_of_replies <- subset(df, df$total_status_id_replies == max_number_of_replies)
+mep_max_number_of_replies <- mepColumn(mep_max_number_of_replies)
+
+mean_number_of_replies <- mean(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+mep_mean_number_of_replies <- mepColumn(getNearest(mean_number_of_replies, df$total_status_id_replies))
+
+median_number_of_replies <- median(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+mep_median_number_of_replies <- mepColumn(subset(df, df$total_status_id_replies == median_number_of_replies))
+
+headers <- c("Min. number of @-replies", "Max. number of @-replies", "Mean number of @-replies", "Median number of @-replies")
+output <- c(min_number_of_replies, max_number_of_replies, mean_number_of_replies, median_number_of_replies)
+mep <- c(mep_min_number_of_replies, mep_max_number_of_replies, mep_mean_number_of_replies, mep_median_number_of_replies)
+
+table_4 <- data.frame(headers, output, mep)
+colnames(table_4) <- c("Item", "Result", "Corresponding MEP or count")
+print(xtable(table_4, digits=c(0,0,1,0), caption="@-Replies by MEPs"), floating=TRUE, include.rownames=FALSE, caption.placement="top", table.placement="H")
+@
+
+<<table_5, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+mean_native_tweets <- mean(subset(df$total_native, df$twitter_handle != ""))
+median_native_tweets <- median(subset(df$total_native, df$twitter_handle != ""))
+max_native_tweets <- max(subset(df$total_native, df$twitter_handle != ""))
+min_native_tweets <- min(subset(df$total_native, df$twitter_handle != ""))
+  
+mean_non_native_tweets <- mean(subset(df$total_non_native, df$twitter_handle != ""))
+median_non_native_tweets <- median(subset(df$total_non_native, df$twitter_handle != ""))
+max_non_native_tweets <- max(subset(df$total_non_native, df$twitter_handle != ""))
+min_non_native_tweets <- min(subset(df$total_non_native, df$twitter_handle != ""))
+
+native_stats <- paste(round(mean_native_tweets, 1), median_native_tweets, max_native_tweets, min_native_tweets, sep=", ")
+non_native_stats <- paste(round(mean_non_native_tweets, 1), median_non_native_tweets, max_non_native_tweets, min_non_native_tweets, sep=", ")
+
+percent_non_native <- round((sum(df$total_non_native) / sum(df$total_tweets)) * 100, 1)
+
+top_non_native_tweeters <- mepColumn(df[order(df$total_non_native, decreasing=TRUE), ][1, ])
+
+never_non_native <- mepColumn(subset(df, df$total_non_native == 0 & df$twitter_handle != "" & df$total_tweets > median_number_of_tweets)[1, ])
+
+headers <- c("Tweets in native language (mean, median, max, min)", "Tweets in non-native language (mean, median, max, min)", "Percent tweets in MEP's non-native language", "Most prolific non-native language tweeters", "MEPs who never tweeted in a non-native language")
+output <- c(native_stats, non_native_stats, percent_non_native, top_non_native_tweeters, never_non_native)
+table_5 <- data.frame(headers, output)
+colnames(table_5) <- c("Item", "Result")
+print(xtable(table_5, caption="Tweets by Language"), include.rownames=FALSE, caption.placement="top", table.placement="H")
+@
+
+<<test>>=
+@
+
+\end{document}

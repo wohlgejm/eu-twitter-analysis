@@ -18,15 +18,19 @@ var stageFunc = function(meps) {
       var valid_tweets = 0;
       mep.tweets.forEach(function(i) {
     	  _tweet = db.tweet.findOne({_id: i, tweeted_at: {"$gte": start_date, "$lte": end_date}});
+        var uncodeable = 0;
+        var non_native_lang = 0;
+        var native_lang = 0;
         if(_tweet) {
           valid_tweets += 1;
-          if(mep.native_lang == _tweet.lang) {
-            var native_lang = 1;
-            var non_native_lang = 0;
+          if (_tweet.lang == "Uncodable") {
+            uncodeable = 1;
+          }
+          else if(mep.native_lang == _tweet.lang) {
+            native_lang = 1;
           }
           else {
-            var native_lang = 0;
-            var non_native_lang = 1;
+            non_native_lang = 1;
           }
           db.staging.insert({
               name: mep.name,
