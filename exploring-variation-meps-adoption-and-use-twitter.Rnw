@@ -1,14 +1,22 @@
 \documentclass{article}
-\usepackage[margin=0.5in]{geometry}
+\usepackage[margin=1.25in]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage[utf8x]{inputenc}
+\usepackage{textcomp}
+\usepackage{float}
+\usepackage{apacite}
+
 \begin{document}
 
-    The European Parliament (EP), despite its status as the most recognized EU institution \cite[e.g.,]{eurobarometer.2014}, still struggles to communicate its mission and relevance to European citizens \citep*{anderson.mcleod.2004}. Turnout for EP elections remains low \citep*{hobolt.2014, franklin.hobolt.2011, mattila.2013}, citizens tend to see EP elections as "second-order" events \citep*{hix.marsh.2007, schmitt.2005}, and Europeans routinely fail to follow and recall EP-related news \citep*{eurobarometer.2013}. 
-  	
+\title{Exploring Variation in MEPs\textquotesingle{} Adoption and Use of Twitter as a Representational Tool}
+\author{John Scherpereel, Peg Schmelzinger, Jerry Wohlgemuth}
+\maketitle
+\clearpage
+
+    The European Parliament (EP), despite its status as the most recognized EU institution \cite{eurobarometer.2014}, still struggles to communicate its mission and relevance to European citizens \cite{anderson.mcleod.2004}. Turnout for EP elections remains low \cite{hobolt.2014, franklin.hobolt.2011, mattila.2013}, citizens tend to see EP elections as "second-order" events \cite{hix.marsh.2007, schmitt.2005}, and Europeans routinely fail to follow and recall EP-related news \cite{eurobarometer.2013}. 
+    
 		For all of these reasons, one might expect members of the European Parliament (MEPs) to embrace Twitter and other Web 2.0 technologies. Theoretically, these technologies could help MEPs to narrow representational gaps, to publicize MEPs' work to audiences that matter (e.g., national party elites, organizational supporters, citizens at large), and to increase citizens' sense of political efficacy. While Twitter has become an increasingly mainstream tool of political campaigning and has been used by incumbent politicians across a wide range of national contexts, this paper begins with the observation that there is significant variation in the extent and nature of MEPs' Twitter use. We demonstrate this variation empirically and seek to seek to determine the factors that drive variation in MEPs' Twitter use.
 		
-		We are specifically concerned with questions about regarding Twitter adoption, tweet frequency, and the quality of MEPs' Twitter use. With regard to adoption, we examine why some MEPs are early adopters while others have eschewed the technology altogether.  With regard to tweet frequency, we investigate why some MEPs tweet more than others.  And, perhaps most importantly, with regard to quality, we examine two dimensions of MEPs Twitter usage. First, we investigate MEPs' language choices (e.g., in which language/s do MEPs tweet?). This investigation generates some insight into the ways that MEPs understand Twitter's value and the audiences they seek to reach. Second, we examine the nature of MEPs' published tweets.  As Ausserhofer and Maireder \citepyear{ausserhofer.maireder.2013} have suggested, politicians can use Twitter in at least two ways. They use it to diffuse information--to \emph{broadcast} details about activities, positions, and opinions. But they also use it to \emph{interact} with specific interlocutors via @-replies and @-mentions. Both kinds of uses can, theoretically, promote deliberation and democratic deepening. We suggest below, however, that conversational interaction via Twitter is particularly important as a possible means of overcoming communication and democratic deficits.
+		We are specifically concerned with questions about regarding Twitter adoption, tweet frequency, and the quality of MEPs' Twitter use. With regard to adoption, we examine why some MEPs are early adopters while others have eschewed the technology altogether.  With regard to tweet frequency, we investigate why some MEPs tweet more than others.  And, perhaps most importantly, with regard to quality, we examine two dimensions of MEPs Twitter usage. First, we investigate MEPs' language choices (e.g., in which language/s do MEPs tweet?). This investigation generates some insight into the ways that MEPs understand Twitter's value and the audiences they seek to reach. Second, we examine the nature of MEPs' published tweets.  As Ausserhofer and Maireder \cite{ausserhofer.maireder.2013} have suggested, politicians can use Twitter in at least two ways. They use it to diffuse information--to \emph{broadcast} details about activities, positions, and opinions. But they also use it to \emph{interact} with specific interlocutors via @-replies and @-mentions. Both kinds of uses can, theoretically, promote deliberation and democratic deepening. We suggest below, however, that conversational interaction via Twitter is particularly important as a possible means of overcoming communication and democratic deficits.
 		
 		In the following sections, we discuss the value and limitations of Twitter as a representational tool for MEPs. We present theoretically derived intuitions about the various factors--constituency-based factors, personal factors, and strategic factors--that might explain variation in MEPs' Twitter use. After discussing data and methods, we present descriptive statistics and multivariate regression results. We argue that ********. We conclude the paper by discuss the implications of our findings and sketching out potential future research trajectories.
 		
@@ -16,17 +24,17 @@
 	 
 		Internet technologies expand the number of communicative channels available to candidates and representatives. Legislators are prolific communicators. On a given workday, they interact directly with colleagues, staffs, counterparts in other governing institutions, journalists, and various societal stakeholders. In addition to their direct interactions, they oversee communications designed to reach diffuse mass audiences. To broadcast their activities to the masses, lawmakers have traditionally relied upon direct mail, e-mail mess, and various intermediary institutions, including parties, the press, broadcast media, public relations firms, and civil societal organizations. To manage incoming communications, they have depended upon personal staffs and party organizations. 
 		
-		Web 1.0 technologies (e.g., candidate, party, and personal web pages) allow legislators to broadcast a consistent message and to archive and showcase their professional efforts\citep*{adler.gent.overmeyer.1998}. Web 2.0 technologies like Twitter and Facebook prioritize interactivity and enable more immediate and spontaneous exchanges between legislators and the public. Online tools rarely displace more established channels. Indeed, channels frequently feed off of each other: politicians' pithiest tweets, for example, are taken up by journalists, and the buzz generated by the press's coverage of tweets feeds back to affect interactions between legislators and their various face-to-face interlocutors.
+		Web 1.0 technologies (e.g., candidate, party, and personal web pages) allow legislators to broadcast a consistent message and to archive and showcase their professional efforts\cite{adler.gent.overmeyer.1998}. Web 2.0 technologies like Twitter and Facebook prioritize interactivity and enable more immediate and spontaneous exchanges between legislators and the public. Online tools rarely displace more established channels. Indeed, channels frequently feed off of each other: politicians' pithiest tweets, for example, are taken up by journalists, and the buzz generated by the press's coverage of tweets feeds back to affect interactions between legislators and their various face-to-face interlocutors.
 	 
 		Unlike Internet technologies that enable interventions of indeterminate length, Twitter imposes on users a notorious 140-character limit. The limit makes deep dialogical exchanges unlikely, rendering long-form debates tedious and difficult-to-follow. And while Twitter users frequently fall into a banality trap--"Thanks!", "Check this out!", "Right!," etc.--the character limit can also encourage a certain synthetic nimbleness or "haiku effect." The proliferation of virtual and hard-copy compilations of tweets testifies to the character limit's muse-like role. In addition, Twitter's premium on spontaneity and immediacy can encourage conversational repartee and information exchange in a way that ultimately promotes deep thinking about public problems and/or more articulated debates in offline or more formally permissive online forums. 
 	 
-		The 140-character limit notwithstanding, Twitter is a flexible medium. Legislators can use the medium to broadcast political activity (e.g., "Meeting with EPP colleagues," "My intervention on Mali at today's EP plenary"), to republish (retweet) content originally distributed by other users, to weigh in on trending debates in the broader Twittersphere, to refer followers to other online content via hyperlinks and hashtags, and more. Twitter generates at least two other opportunities worth noting. First, the @-reply function: tweets that begin with @username allow users interlocutors directly, and, in so doing, to engage in direct conversations with followers. While research on national legislatures suggests that politicians rarely avail themselves of this more participatory, dialogical function \citep*{leston-bandeira.bender.2013}, its existence may be attractive to MEPs who are keen to foster relationships with interlocutors (or, at least, to appear so keen). Second, linguistic diversity: Twitter allows MEPs to address themselves to multiple linguistic communities. The EP has 24 official languages. MEPs might choose to tweet in more than one of these languages (and/or, for example, in unofficial but politically resonant languages like Catalán, Galician, or Welsh) for strategic political reasons, to signal responsiveness to specific interlocutors, and/or to reach more diffuse mass audiences \citep*{deSwaan.1993}.
+		The 140-character limit notwithstanding, Twitter is a flexible medium. Legislators can use the medium to broadcast political activity (e.g., "Meeting with EPP colleagues," "My intervention on Mali at today's EP plenary"), to republish (retweet) content originally distributed by other users, to weigh in on trending debates in the broader Twittersphere, to refer followers to other online content via hyperlinks and hashtags, and more. Twitter generates at least two other opportunities worth noting. First, the @-reply function: tweets that begin with @username allow users interlocutors directly, and, in so doing, to engage in direct conversations with followers. While research on national legislatures suggests that politicians rarely avail themselves of this more participatory, dialogical function \cite{leston-bandeira.bender.2013}, its existence may be attractive to MEPs who are keen to foster relationships with interlocutors (or, at least, to appear so keen). Second, linguistic diversity: Twitter allows MEPs to address themselves to multiple linguistic communities. The EP has 24 official languages. MEPs might choose to tweet in more than one of these languages (and/or, for example, in unofficial but politically resonant languages like Catalán, Galician, or Welsh) for strategic political reasons, to signal responsiveness to specific interlocutors, and/or to reach more diffuse mass audiences \cite{deSwaan.1993}.
 	 
-		The characteristics that are often associated with Twitter--immediacy, interactivity, spontaneity, personality, informality--are congruent with a media zeitgeist that equates speed with quality. They are also likely to resonate with a Europe in which social mistrust is rising \citep*{dogan.2005, pharr.putnam.dalton.2000} and traditional institutions like political parties \citep*{vanbiezen.poguntke.2014, vanbiezen.mair.poguntke.2012, whitely.2011}, religious organizations \citep*{burkimsher.2014, voas.2007, voas.2009}, and labor unions \citep*{ebbinghaus.2002, vanbiezen.poguntke.2014} are losing steam. Twitter's defining characteristics contrast with postwar "politics as usual" and tap into public frustration with the status quo. For these reasons, we might expect MEPs to flock to Twitter.
+		The characteristics that are often associated with Twitter--immediacy, interactivity, spontaneity, personality, informality--are congruent with a media zeitgeist that equates speed with quality. They are also likely to resonate with a Europe in which social mistrust is rising \cite{dogan.2005, pharr.putnam.dalton.2000} and traditional institutions like political parties \cite{vanbiezen.poguntke.2014, vanbiezen.mair.poguntke.2012, whitely.2011}, religious organizations \cite{burkimsher.2014, voas.2007, voas.2009}, and labor unions \cite{ebbinghaus.2002, vanbiezen.poguntke.2014} are losing steam. Twitter's defining characteristics contrast with postwar "politics as usual" and tap into public frustration with the status quo. For these reasons, we might expect MEPs to flock to Twitter.
 		
-		Perhaps the most important reason to expect widespread adoption and use, though, has to do with the relative invisibility of the EP and particular MEPs in comparison with other political actors. As noted above, the EP is the EU's most widely recognized institution--Eurobarometer surveys consistently show that more citizens have heard of the EP than they have of the Commission, the Council, or the Court of Justice. Beyond such superficiality, though, the EP and its members struggle to distinguish themselves and to showcase their relevance. A May 2014 poll in the United Kingdom, for example, revealed that only 11 percent of voters were confident that they could name one of their MEPs; this contrasted with the 52 percent of voters who thought they could name their (Westminster) MP and the 31 percent that could name a local councillor \citep*{coman.helm.2014}. **insert anecdotes from Rose 2013** The personalization of the 2014 EP election campaign and the competition between party groups' \emph{Spitzenkandidaten} may have helped to stem the trend of falling EP voter turnout, but community-wide turnout remains lower than turnout for national elections in most member-states. Citizens struggle to retain EP-specific news items \citep*{eurobarometer.2013}. The EP's continuing efforts to increase its physical and virtual presences--through institutional social media efforts, an on-line television station, offices in the member states, the Parliamentarium, the planned House of European History, etc.--have struggled to deepen Europeans' identification with the EP and its incumbents. These developments have taken place, of course, despite the EP's decades-long expansion of legislative and broader political power \citep*{corbett.jacobs.shackleton.2011, rittberger.2005}.
+		Perhaps the most important reason to expect widespread adoption and use, though, has to do with the relative invisibility of the EP and particular MEPs in comparison with other political actors. As noted above, the EP is the EU's most widely recognized institution--Eurobarometer surveys consistently show that more citizens have heard of the EP than they have of the Commission, the Council, or the Court of Justice. Beyond such superficiality, though, the EP and its members struggle to distinguish themselves and to showcase their relevance. A May 2014 poll in the United Kingdom, for example, revealed that only 11 percent of voters were confident that they could name one of their MEPs; this contrasted with the 52 percent of voters who thought they could name their (Westminster) MP and the 31 percent that could name a local councillor \cite{coman.helm.2014}. **insert anecdotes from Rose 2013** The personalization of the 2014 EP election campaign and the competition between party groups' \emph{Spitzenkandidaten} may have helped to stem the trend of falling EP voter turnout, but community-wide turnout remains lower than turnout for national elections in most member-states. Citizens struggle to retain EP-specific news items \cite{eurobarometer.2013}. The EP's continuing efforts to increase its physical and virtual presences--through institutional social media efforts, an on-line television station, offices in the member states, the Parliamentarium, the planned House of European History, etc.--have struggled to deepen Europeans' identification with the EP and its incumbents. These developments have taken place, of course, despite the EP's decades-long expansion of legislative and broader political power \cite{corbett.jacobs.shackleton.2011, rittberger.2005}.
 		
-		Despite Twitter's attractions, 31 percent of current (2014-2019) MEPs have thus far decided \emph{not} to establish a Twitter account. And the 69 percent of MEPs who have established accounts use Twitter in very different ways. Why? The literature on politicians' Twitter use provides a number of potential answers to this question. To date, there has been no comprehensive academic analysis of sitting MEPs' Twitter activity. But existing literatures on Twitter use among EP \emph{candidates} \citep*{vergeer.hermans.sams.2011,vergeer.hermans.sams.2013}), Twitter use among sitting sitting national legislators \citep*{ausserhofer.maireder.2013, chi.yang.2010, glassman.strauss.shogan.2013, larsson.kalsnes.2014, peterson.2012, shogun.2010} and digital communication adoption more broadly \citep*{adler.gent.overmeyer.1998, chen.2010, gibson.rommele.2001, gibson.ward.2009, hargittai.2008, hernnson.stokes-brown.hindman.2007, wei.lo.2006, williams.gulati.2010, williams.gulati.2011} help to generate a number of alternative explanations. Following in the footsteps of some of these authors, we can distinguish among three potentially important sets of characteristics--constituency characteristics, personal characteristics, and structural/strategic characteristics--that might affect the ways that MEPs use (and don't use) Twitter.
+		Despite Twitter's attractions, 31 percent of current (2014-2019) MEPs have thus far decided \emph{not} to establish a Twitter account. And the 69 percent of MEPs who have established accounts use Twitter in very different ways. Why? The literature on politicians' Twitter use provides a number of potential answers to this question. To date, there has been no comprehensive academic analysis of sitting MEPs' Twitter activity. But existing literatures on Twitter use among EP \emph{candidates} \cite{vergeer.hermans.sams.2011,vergeer.hermans.sams.2013}), Twitter use among sitting sitting national legislators \cite{ausserhofer.maireder.2013, chi.yang.2010, glassman.strauss.shogan.2013, larsson.kalsnes.2014, peterson.2012, shogun.2010} and digital communication adoption more broadly \cite{adler.gent.overmeyer.1998, chen.2010, gibson.rommele.2001, gibson.ward.2009, hargittai.2008, hernnson.stokes-brown.hindman.2007, williams.gulati.2010, williams.gulati.2011} help to generate a number of alternative explanations. Following in the footsteps of some of these authors, we can distinguish among three potentially important sets of characteristics--constituency characteristics, personal characteristics, and structural/strategic characteristics--that might affect the ways that MEPs use (and don't use) Twitter.
     
     In general, in the context of the EP, \emph{constituency-based} intuitions suggest that differences in Twitter use will vary along national lines. Scholars differ, however, with regard to which specific national factors might drive adoption and behavior.      
 		
@@ -38,10 +46,10 @@
 		
 		Etc.
 
-
 <<table_1, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
-library(sqldf)
 library(xtable)
+
+days <- 90
 
 trunc <- function(text) {
   text <- as.character(text)
@@ -78,14 +86,14 @@ mepColumn <- function(df) {
   if(length(df$name) > 1) {
     return(length(df$name))
   } else {
-    text <- paste(df[1, 6, drop=TRUE], " (", party(df[1, 1, drop=TRUE]), ", ", trunc(df[1, 17, drop=TRUE]), ")", sep="")
+    text <- paste(df[1, 'name', drop=TRUE], " (", party(df[1, 'european_party', drop=TRUE]), ", ", trunc(df[1, 'nationality', drop=TRUE]), ")", sep="")
     return(text)
   }
 }
 
 workdir <- getwd()
 df <- read.csv(paste(workdir, "/reduced_output.csv", sep=""))
-df$twitter_birthday <- as.Date(df$twitter_birthday)
+df$twitter_birthday <- as.Date(df$twitter_birthday, "%Y-%m-%d %H:%M:%S")
 
 meps_using_twitter <- length(subset(df$twitter_handle, df$twitter_handle != ""))
 
@@ -99,43 +107,108 @@ mep_youngest_twitter_birthday <- mepColumn(mep_youngest_twitter_birthday)
 
 mean_twitter_birthday <- mean(df$twitter_birthday, na.rm=TRUE)
 
-min_number_of_tweets <- min(subset(df$total_tweets, df$twitter_handle != ""))
-mep_min_number_of_tweets <- subset(df, df$total_tweets == min_number_of_tweets)
+df$mean_tweets <- sapply(df$total_tweets, function(x) x/days)
+
+min_number_of_tweets <- min(subset(df$mean_tweets, df$twitter_handle != ""))
+mep_min_number_of_tweets <- subset(df, df$mean_tweets == min_number_of_tweets)
 mep_min_number_of_tweets <- mepColumn(mep_min_number_of_tweets)
 
-max_number_of_tweets <- max(df$total_tweets, na.rm=TRUE)
-mep_max_number_of_tweets <- subset(df, df$total_tweets == max_number_of_tweets)
-mep_max_number_of_tweets <- mepColumn(mep_max_number_of_tweets)
+max_number_of_tweets <- max(df$mean_tweets, na.rm=TRUE)
+mep_max_number_of_tweets <- mepColumn(subset(df, df$mean_tweets == max_number_of_tweets))
+
+getNearest <- function(x, vec) {
+  idx <- which.min(abs(vec - x))
+  return(df[idx, ])
+}
 
 mean_number_of_tweets <- mean(subset(df$total_tweets, df$twitter_handle != ""))
+mep_mean_number_of_tweets <- mepColumn(getNearest(mean_number_of_tweets, df$total_tweets))
 
 median_number_of_tweets <- median(subset(df$total_tweets, df$twitter_handle != ""))
+mep_median_number_of_tweets <- mepColumn(getNearest(median_number_of_tweets, df$total_tweets))
 
-headers <- c("Number of MEPs using twitter", 'Oldest twitter "birthday"', 'Youngest twitter "birthday"', 'Mean twitter "birthday"', "Min. number of tweets", "Max. number of tweets", "Mean number of tweets", "Median number of tweets")
-output <- c(meps_using_twitter, oldest_twitter_birthday, youngest_twitter_birthday, mean_twitter_birthday, min_number_of_tweets, max_number_of_tweets, mean_number_of_tweets, median_number_of_tweets)
-mep <- c("N/A", mep_oldest_twitter_birthday, mep_youngest_twitter_birthday, "N/A", mep_min_number_of_tweets, mep_max_number_of_tweets, "N/A", "N/A")
+headers <- c("Number of MEPs using twitter", 'Oldest twitter "birthday"', 'Youngest twitter "birthday"', 'Mean twitter "birthday"', "Min. number of tweets per day (mean)", "Max. number of tweets per day (mean)", "Total number of tweets (mean)", "Total number of tweets (median)")
+output <- c(meps_using_twitter, as.character(oldest_twitter_birthday), as.character(youngest_twitter_birthday), as.character(mean_twitter_birthday), min_number_of_tweets, round(max_number_of_tweets, 1), round(mean_number_of_tweets, 1), round(median_number_of_tweets, 1))
+mep <- c("N/A", mep_oldest_twitter_birthday, mep_youngest_twitter_birthday, "N/A", mep_min_number_of_tweets, mep_max_number_of_tweets, mep_mean_number_of_tweets, mep_median_number_of_tweets)
 
 table_1 <- data.frame(headers, output, mep)
-colnames(table_1) <- c("", "Result", "Corresponding MEP or count")
-print(xtable(table_1, includecolnames=FALSE))
+colnames(table_1) <- c("Item", "Result", "Corresponding MEP or count")
+print(xtable(table_1, caption="MEPs' Tweet Behavior"), include.rownames=FALSE, caption.placement="top", table.placement="H")
 @
 
+<<table_2, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+party_group <- aggregate(mean_tweets ~ european_party, df, median)
+party_group$european_party <- sapply(party_group$european_party, party)
+party_group <- party_group[order(-party_group$mean_tweets), ]
+party_group$mean_tweets <- round(party_group$mean_tweets, 1)
+colnames(party_group) <- c("Party group", "Median number of tweets per MEP per day")
+print(xtable(party_group, digits=c(0,0,1), caption="MEPs' Tweet Behavior by EP Party Group"), floating=TRUE, include.rownames=FALSE, caption.placement="top", table.placement="H")
+@
+
+<<table_3, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+state_group <- aggregate(mean_tweets ~ nationality, df, median)
+state_group <- state_group[order(-state_group$mean_tweets), ]
+state_group$mean_tweets <- round(state_group$mean_tweets, 1)
+colnames(state_group) <- c("Member state", "Median number of tweets per MEP per day")
+print(xtable(state_group, digits=c(0,0,1), caption="MEPs' Tweet Behavior by Member State"), floating=TRUE, include.rownames=FALSE, caption.placement="top", table.placement="H")
+@
+
+
 <<table_4, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
-library(sqldf)
 min_number_of_replies <- min(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+mep_min_number_of_replies <- subset(df, df$total_status_id_replies == min_number_of_replies)
+mep_min_number_of_replies <- mepColumn(mep_min_number_of_replies)
 
 max_number_of_replies <- max(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+mep_max_number_of_replies <- subset(df, df$total_status_id_replies == max_number_of_replies)
+mep_max_number_of_replies <- mepColumn(mep_max_number_of_replies)
 
 mean_number_of_replies <- mean(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+mep_mean_number_of_replies <- mepColumn(getNearest(mean_number_of_replies, df$total_status_id_replies))
 
 median_number_of_replies <- median(subset(df$total_status_id_replies, df$twitter_handle != ""), na.rm=TRUE)
+mep_median_number_of_replies <- mepColumn(subset(df, df$total_status_id_replies == median_number_of_replies))
 
 headers <- c("Min. number of @-replies", "Max. number of @-replies", "Mean number of @-replies", "Median number of @-replies")
 output <- c(min_number_of_replies, max_number_of_replies, mean_number_of_replies, median_number_of_replies)
+mep <- c(mep_min_number_of_replies, mep_max_number_of_replies, mep_mean_number_of_replies, mep_median_number_of_replies)
 
-table_4 <- data.frame(headers, output)
-print(xtable(table_4))
+table_4 <- data.frame(headers, output, mep)
+colnames(table_4) <- c("Item", "Result", "Corresponding MEP or count")
+print(xtable(table_4, digits=c(0,0,1,0), caption="@-Replies by MEPs"), floating=TRUE, include.rownames=FALSE, caption.placement="top", table.placement="H")
 @
 
+<<table_5, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+mean_native_tweets <- mean(subset(df$total_native, df$twitter_handle != ""))
+median_native_tweets <- median(subset(df$total_native, df$twitter_handle != ""))
+max_native_tweets <- max(subset(df$total_native, df$twitter_handle != ""))
+min_native_tweets <- min(subset(df$total_native, df$twitter_handle != ""))
+  
+mean_non_native_tweets <- mean(subset(df$total_non_native, df$twitter_handle != ""))
+median_non_native_tweets <- median(subset(df$total_non_native, df$twitter_handle != ""))
+max_non_native_tweets <- max(subset(df$total_non_native, df$twitter_handle != ""))
+min_non_native_tweets <- min(subset(df$total_non_native, df$twitter_handle != ""))
+
+native_stats <- paste(round(mean_native_tweets, 1), median_native_tweets, max_native_tweets, min_native_tweets, sep=", ")
+non_native_stats <- paste(round(mean_non_native_tweets, 1), median_non_native_tweets, max_non_native_tweets, min_non_native_tweets, sep=", ")
+
+percent_non_native <- round((sum(df$total_non_native) / sum(df$total_tweets)) * 100, 1)
+
+top_non_native_tweeters <- mepColumn(df[order(df$total_non_native, decreasing=TRUE), ][1, ])
+
+never_non_native <- mepColumn(subset(df, df$total_non_native == 0 & df$twitter_handle != "" & df$total_tweets > median_number_of_tweets)[1, ])
+
+headers <- c("Tweets in native language (mean, median, max, min)", "Tweets in non-native language (mean, median, max, min)", "Percent tweets in MEP's non-native language", "Most prolific non-native language tweeters", "MEPs who never tweeted in a non-native language")
+output <- c(native_stats, non_native_stats, percent_non_native, top_non_native_tweeters, never_non_native)
+table_5 <- data.frame(headers, output)
+colnames(table_5) <- c("Item", "Result")
+print(xtable(table_5, caption="Tweets by Language"), include.rownames=FALSE, caption.placement="top", table.placement="H")
+@
+
+<<test>>=
+@
+\clearpage
+\bibliographystyle{apacite}
+\bibliography{references}
 
 \end{document}
