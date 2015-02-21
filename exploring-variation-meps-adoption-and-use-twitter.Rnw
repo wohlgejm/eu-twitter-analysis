@@ -205,6 +205,61 @@ colnames(table_5) <- c("Item", "Result")
 print(xtable(table_5, caption="Tweets by Language"), include.rownames=FALSE, caption.placement="top", table.placement="H")
 @
 
+<<table_7, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+df$num_born <- as.numeric(df$born)
+df$num_twitter_birthday <- as.numeric(df$twitter_birthday)
+
+df$european_party <- sapply(df$european_party, party)
+onTwitter <- function(x) {
+  if(x != '') {
+    return(1)
+  } else {
+    return(0)
+  }
+}
+df$on_twitter <- sapply(df$twitter_handle, onTwitter)
+on_twitter_logit <- glm(on_twitter ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=df, family="binomial")
+
+print(xtable(on_twitter_logit, caption="On Twitter GLM"), caption.placement="top", table.placement="H")
+par(mfrow=c(2,2))
+plot(on_twitter_logit)
+
+
+@
+
+<<table_8, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+library("MASS")
+birthdays <- subset(df, !is.na(df$num_twitter_birthday))
+hist(birthdays$num_twitter_birthday)
+
+twitter_birthday_glm_nb <- glm(num_twitter_birthday ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=birthdays)
+
+print(xtable(twitter_birthday_glm_nb, caption="Twitter Birthday GLM Negative Binomial"), caption.placement="top", table.placement="H")
+par(mfrow=c(2,2))
+plot(twitter_birthday_glm_nb)
+@
+
+<<table_9, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+library("MASS")
+tweeters <- subset(df, df$twitter_handle != '')
+total_tweets_fit_glm_nb <- glm.nb(total_tweets ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=tweeters)
+
+print(xtable(total_tweets_fit_glm_nb, caption="Total Tweets GLM Negative Binomial"), caption.placement="top", table.placement="H")
+par(mfrow=c(2,2))
+plot(total_tweets_fit_glm_nb)
+
+@
+
+<<table_10, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+library("MASS")
+replies_fit_glm_nb <- glm.nb(total_screen_name_replies ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=tweeters)
+
+print(xtable(replies_fit_glm_nb, caption="Total @-Replies GLM Negative Binomial"), caption.placement="top", table.placement="H")
+par(mfrow=c(2,2))
+plot(replies_fit_glm_nb)
+
+@
+
 <<test>>=
 @
 \clearpage
