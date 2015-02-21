@@ -207,7 +207,11 @@ print(xtable(table_5, caption="Tweets by Language"), include.rownames=FALSE, cap
 
 <<table_7, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 df$num_born <- as.numeric(df$born)
-df$num_twitter_birthday <- as.numeric(df$twitter_birthday)
+end_date <- as.Date("2014-09-01")
+calcBirthday <- function(x) {
+  return(end_date - x)
+}
+df$num_twitter_birthday <- sapply(df$twitter_birthday, calcBirthday)
 
 df$european_party <- sapply(df$european_party, party)
 onTwitter <- function(x) {
