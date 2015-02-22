@@ -4,6 +4,7 @@
 \usepackage{textcomp}
 \usepackage{float}
 \usepackage{apacite}
+\usepackage{lscape}
 
 \begin{document}
 
@@ -50,6 +51,18 @@
 library(xtable)
 
 days <- 90
+
+sigStar <- function(x) {
+  if(x < 0.01) {
+    return(as.character(x) + "***")
+  } else if(x < 0.05) {
+    return(as.character(x) + "**")
+  } else if(x <= 0.1) {
+    return(as.character(x) + "*")
+  } else {
+    return(x)
+  }
+}
 
 trunc <- function(text) {
   text <- as.character(text)
@@ -206,6 +219,7 @@ print(xtable(table_5, caption="Tweets by Language"), include.rownames=FALSE, cap
 @
 
 <<table_7, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+library(stargazer)
 df$num_born <- as.numeric(df$born)
 end_date <- as.Date("2014-09-01")
 calcBirthday <- function(x) {
@@ -224,23 +238,16 @@ onTwitter <- function(x) {
 df$on_twitter <- sapply(df$twitter_handle, onTwitter)
 on_twitter_logit <- glm(on_twitter ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=df, family="binomial")
 
-print(xtable(on_twitter_logit, caption="On Twitter GLM"), caption.placement="top", table.placement="H")
-par(mfrow=c(2,2))
-plot(on_twitter_logit)
-
-
+#print(xtable(on_twitter_logit, caption="On Twitter GLM"), caption.placement="top", table.placement="H")
 @
 
 <<table_8, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 library("MASS")
 birthdays <- subset(df, !is.na(df$num_twitter_birthday))
-hist(birthdays$num_twitter_birthday)
 
-twitter_birthday_glm_nb <- glm(num_twitter_birthday ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=birthdays)
+twitter_birthday_glm_nb <- glm.nb(num_twitter_birthday ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=birthdays)
 
-print(xtable(twitter_birthday_glm_nb, caption="Twitter Birthday GLM Negative Binomial"), caption.placement="top", table.placement="H")
-par(mfrow=c(2,2))
-plot(twitter_birthday_glm_nb)
+#print(xtable(twitter_birthday_glm_nb, caption="Twitter Birthday GLM Negative Binomial"), caption.placement="top", table.placement="H")
 @
 
 <<table_9, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
@@ -248,24 +255,21 @@ library("MASS")
 tweeters <- subset(df, df$twitter_handle != '')
 total_tweets_fit_glm_nb <- glm.nb(total_tweets ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=tweeters)
 
-print(xtable(total_tweets_fit_glm_nb, caption="Total Tweets GLM Negative Binomial"), caption.placement="top", table.placement="H")
-par(mfrow=c(2,2))
-plot(total_tweets_fit_glm_nb)
-
+#print(xtable(total_tweets_fit_glm_nb, caption="Total Tweets GLM Negative Binomial"), caption.placement="top", table.placement="H")
 @
 
 <<table_10, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 library("MASS")
 replies_fit_glm_nb <- glm.nb(total_screen_name_replies ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=tweeters)
 
-print(xtable(replies_fit_glm_nb, caption="Total @-Replies GLM Negative Binomial"), caption.placement="top", table.placement="H")
-par(mfrow=c(2,2))
-plot(replies_fit_glm_nb)
+#print(xtable(replies_fit_glm_nb, caption="Total @-Replies GLM Negative Binomial"), caption.placement="top", table.placement="H")
 
 @
 
-<<test>>=
+<<regression_table, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+stargazer(on_twitter_logit, twitter_birthday_glm_nb, total_tweets_fit_glm_nb, replies_fit_glm_nb, title="Regression Results", covariate.labels=c("Age", "Gender", "Right Left", "Days Served", "Party Share", "GDP per Captia", "Global IT Score", "Press Freedom", "Median Age", "Electoral System"), dep.var.labels=c("On Twitter", "Twitter Birthday", "Total Tweets", "Total @-Replies"))
 @
+
 \clearpage
 \bibliographystyle{apacite}
 \bibliography{references}
