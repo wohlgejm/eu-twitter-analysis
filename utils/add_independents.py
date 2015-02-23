@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import re
 import csv
 from bson.objectid import ObjectId
+from settings import username, password
 
 client = MongoClient('research.jmu.rocks')
 client.admin.authenticate(username, password)
@@ -119,9 +120,18 @@ def code_mep_lang():
             lang = codes[row[1]]
             db.mep.update({'name': row[0]}, {'$set': {'native_lang': lang}})
 
+
+def update_handles_birthdays():
+    with open('/home/jwohlgemuth/eu-twitter-analysis/updated_handles_birthdays.csv', 'r') as infile:
+        reader = csv.reader(infile, delimiter=',')
+        reader.next()
+        for row in reader:
+            db.mep.update({'name': row[0]}, {'$set': {'twitter_handle': row[1], 'twitter_birthday': row[2]}})
+
 if __name__ == '__main__':
-    add_data()
-    output_reduced()
+    #add_data()
+    #output_reduced()
     #code_lang_manuel()
     #code_lang_api()
     #code_mep_lang()
+    update_handles_birthdays()

@@ -95,6 +95,14 @@ party <- function(party) {
   }
 }
 
+minorityParty <- function(x) {
+  if(x == "EPP" || x == "S&D" || x == "ALDE") {
+    return(0)
+  } else {
+    return(1)
+  }
+}
+
 mepColumn <- function(df) {
   if(length(df$name) > 1) {
     return(length(df$name))
@@ -107,7 +115,9 @@ mepColumn <- function(df) {
 workdir <- getwd()
 df <- read.csv(paste(workdir, "/reduced_output.csv", sep=""))
 df$twitter_birthday <- as.Date(df$twitter_birthday, "%Y-%m-%d %H:%M:%S")
-
+  
+df$european_party <- sapply(df$european_party, party)
+df$minority_mep <- sapply(df$european_party, minorityParty)
 meps_using_twitter <- length(subset(df$twitter_handle, df$twitter_handle != ""))
 
 oldest_twitter_birthday <- min(df$twitter_birthday, na.rm=TRUE)
@@ -183,6 +193,7 @@ median_number_of_replies <- median(subset(df$total_status_id_replies, df$twitter
 mep_median_number_of_replies <- mepColumn(subset(df, df$total_status_id_replies == median_number_of_replies))
 
 headers <- c("Min. number of @-replies", "Max. number of @-replies", "Mean number of @-replies", "Median number of @-replies")
+
 output <- c(min_number_of_replies, max_number_of_replies, mean_number_of_replies, median_number_of_replies)
 mep <- c(mep_min_number_of_replies, mep_max_number_of_replies, mep_mean_number_of_replies, mep_median_number_of_replies)
 
@@ -218,16 +229,38 @@ colnames(table_5) <- c("Item", "Result")
 print(xtable(table_5, caption="Tweets by Language"), include.rownames=FALSE, caption.placement="top", table.placement="H")
 @
 
-<<table_7, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
+<<table_7, cache=FALSE, echo=FALSE, message=FALSE>>=
 library(stargazer)
-df$num_born <- as.numeric(df$born)
 end_date <- as.Date("2014-09-01")
+
+age_calc <- function(dob, enddate=end_date, units='years'){
+  if (!inherits(dob, "Date") | !inherits(enddate, "Date"))
+    stop("Both dob and enddate must be Date class objects")
+  start <- as.POSIXlt(dob)
+  end <- as.POSIXlt(enddate)
+
+  years <- end$year - start$year
+  if(units=='years'){
+    result <- ifelse((end$mon < start$mon) | 
+                      ((end$mon == start$mon) & (end$mday < start$mday)),
+                      years - 1, years)    
+  }else if(units=='months'){
+    months <- (years-1) * 12
+    result <- months + start$mon
+  }else if(units=='days'){
+    result <- difftime(end, start, units='days')
+  }else{
+    stop("Unrecognized units. Please choose years, months, or days.")
+  }
+  return(result)
+}
+
+df$num_born <- sapply(as.Date(df$born), age_calc)
 calcBirthday <- function(x) {
   return(end_date - x)
 }
 df$num_twitter_birthday <- sapply(df$twitter_birthday, calcBirthday)
 
-df$european_party <- sapply(df$european_party, party)
 onTwitter <- function(x) {
   if(x != '') {
     return(1)
@@ -236,16 +269,18 @@ onTwitter <- function(x) {
   }
 }
 df$on_twitter <- sapply(df$twitter_handle, onTwitter)
-on_twitter_logit <- glm(on_twitter ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=df, family="binomial")
+df["internal_cohesion_score_2009.2014"][is.na(df["internal_cohesion_score_2009.2014"])] <- 0
 
-#print(xtable(on_twitter_logit, caption="On Twitter GLM"), caption.placement="top", table.placement="H")
+on_twitter_logit <- glm(factor(on_twitter) ~ WEF_Global_IT_score_2014 + GDP_per_capita_PPS_2013 + Median_age_2014 + Press_freedom_2014 + num_born + factor(gender) + factor(right_left) + minority_mep + internal_cohesion_score_2009.2014 + share_2009.share_2014 + Electoral_system, data=df, family="binomial")
+print(sapply(df, function(x) sum(is.na(x))))
+print(summary(on_twitter_logit))
 @
 
 <<table_8, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 library("MASS")
 birthdays <- subset(df, !is.na(df$num_twitter_birthday))
 
-twitter_birthday_glm_nb <- glm.nb(num_twitter_birthday ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=birthdays)
+twitter_birthday_glm_nb <- glm.nb(num_twitter_birthday ~ WEF_Global_IT_score_2014 + GDP_per_capita_PPS_2013 + Median_age_2014 + Press_freedom_2014 + num_born + factor(gender) + factor(right_left) + minority_mep + internal_cohesion_score_2009.2014 + share_2009.share_2014 + Electoral_system, data=birthdays)
 
 #print(xtable(twitter_birthday_glm_nb, caption="Twitter Birthday GLM Negative Binomial"), caption.placement="top", table.placement="H")
 @
@@ -253,21 +288,21 @@ twitter_birthday_glm_nb <- glm.nb(num_twitter_birthday ~ num_born + factor(gende
 <<table_9, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 library("MASS")
 tweeters <- subset(df, df$twitter_handle != '')
-total_tweets_fit_glm_nb <- glm.nb(total_tweets ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=tweeters)
+total_tweets_fit_glm_nb <- glm.nb(total_tweets ~ WEF_Global_IT_score_2014 + GDP_per_capita_PPS_2013 + Median_age_2014 + Press_freedom_2014 + num_born + factor(gender) + factor(right_left) + minority_mep + internal_cohesion_score_2009.2014 + share_2009.share_2014 + Electoral_system, data=tweeters)
 
 #print(xtable(total_tweets_fit_glm_nb, caption="Total Tweets GLM Negative Binomial"), caption.placement="top", table.placement="H")
 @
 
 <<table_10, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 library("MASS")
-replies_fit_glm_nb <- glm.nb(total_screen_name_replies ~ num_born + factor(gender) + factor(right_left) + days_served + share_2009.share_2014 + GDP_per_capita_PPS_2013 + WEF_Global_IT_score_2014 + Press_freedom_2014 + Median_age_2014 + Electoral_system, data=tweeters)
+replies_fit_glm_nb <- glm.nb(total_screen_name_replies ~ WEF_Global_IT_score_2014 + GDP_per_capita_PPS_2013 + Median_age_2014 + Press_freedom_2014 + num_born + factor(gender) + factor(right_left) + minority_mep + internal_cohesion_score_2009.2014 + share_2009.share_2014 + Electoral_system, data=tweeters)
 
 #print(xtable(replies_fit_glm_nb, caption="Total @-Replies GLM Negative Binomial"), caption.placement="top", table.placement="H")
 
 @
 
 <<regression_table, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
-stargazer(on_twitter_logit, twitter_birthday_glm_nb, total_tweets_fit_glm_nb, replies_fit_glm_nb, title="Regression Results", covariate.labels=c("Age", "Gender", "Right Left", "Days Served", "Party Share", "GDP per Captia", "Global IT Score", "Press Freedom", "Median Age", "Electoral System"), dep.var.labels=c("On Twitter", "Twitter Birthday", "Total Tweets", "Total @-Replies"))
+stargazer(on_twitter_logit, twitter_birthday_glm_nb, total_tweets_fit_glm_nb, replies_fit_glm_nb, title="Regression Results", covariate.labels=c("District technology", "District wealth", "District age", "District median freedom", "MEP age", "MEP gender", "Left MEP", "Minority MEP", "Inchoate MEP", "Endangered MEP", "Electoral system"), dep.var.labels=c("On Twitter", "Twitter Birthday", "Total Tweets", "Total @-Replies"))
 @
 
 \clearpage
