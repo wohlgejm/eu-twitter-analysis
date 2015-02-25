@@ -13,7 +13,7 @@ csvs = ['hypotheses_1_2_3_4_12.csv', 'share.csv', 'tenure.csv', 'right_left.csv'
 
 def add_data():
     for idx, i in enumerate(csvs):
-        with open('/home/jwohlgemuth/eu-twitter-analysis/' + i, 'r') as infile:
+        with open('/home/jerry/eu-twitter-analysis/' + i, 'r') as infile:
             reader = csv.reader(infile, delimiter=',')
             reader.next()
             if idx == 0:
@@ -75,7 +75,7 @@ def output_reduced():
             row.setdefault("right_left", None)
         rows.append(row)
 
-    with open('/home/jwohlgemuth/eu-twitter-analysis/reduced_output.csv', 'wb') as f:
+    with open('/home/jerry/eu-twitter-analysis/reduced_output.csv', 'wb') as f:
         w = csv.DictWriter(f, rows[0].keys())
         w.writeheader()
         w.writerows(rows)
@@ -129,9 +129,9 @@ def update_handles_birthdays():
             db.mep.update({'name': row[0]}, {'$set': {'twitter_handle': row[1], 'twitter_birthday': row[2]}})
 
 if __name__ == '__main__':
-    #add_data()
-    #output_reduced()
+    add_data()
+    output_reduced()
     #code_lang_manuel()
     #code_lang_api()
     #code_mep_lang()
-    update_handles_birthdays()
+    #update_handles_birthdays()

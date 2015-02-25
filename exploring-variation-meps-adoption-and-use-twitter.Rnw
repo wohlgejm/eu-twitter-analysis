@@ -13,7 +13,7 @@
 \maketitle
 \clearpage
 
-    The European Parliament (EP), despite its status as the most recognized EU institution \cite{eurobarometer.2014}, still struggles to communicate its mission and relevance to European citizens \cite{anderson.mcleod.2004}. Turnout for EP elections remains low \cite{hobolt.2014, franklin.hobolt.2011, mattila.2013}, citizens tend to see EP elections as "second-order" events \cite{hix.marsh.2007, schmitt.2005}, and Europeans routinely fail to follow and recall EP-related news \cite{eurobarometer.2013}. 
+    The European Parliament (EP), despite its status as the most recognized EU institution \cite{eurobarometer.2014}, still struggles to communicate its mission and relevance to European citizens \cite{anderson.mcleod.2004}. Turnout for EP elections remains low \cite{hobolt.2014, franklin.hobolt.2011, mattila.2003}, citizens tend to see EP elections as "second-order" events \cite{hix.marsh.2007, schmitt.2005}, and Europeans routinely fail to follow and recall EP-related news \cite{eurobarometer.2013}. 
     
 		For all of these reasons, one might expect members of the European Parliament (MEPs) to embrace Twitter and other Web 2.0 technologies. Theoretically, these technologies could help MEPs to narrow representational gaps, to publicize MEPs' work to audiences that matter (e.g., national party elites, organizational supporters, citizens at large), and to increase citizens' sense of political efficacy. While Twitter has become an increasingly mainstream tool of political campaigning and has been used by incumbent politicians across a wide range of national contexts, this paper begins with the observation that there is significant variation in the extent and nature of MEPs' Twitter use. We demonstrate this variation empirically and seek to seek to determine the factors that drive variation in MEPs' Twitter use.
 		
@@ -134,14 +134,14 @@ mepColumn <- function(df) {
   if(length(df$name) > 1) {
     return(length(df$name))
   } else {
-    text <- paste(df[1, 'name', drop=TRUE], " (", party(df[1, 'european_party', drop=TRUE]), ", ", trunc(df[1, 'nationality', drop=TRUE]), ")", sep="")
+    text <- paste(df[1, 'name', drop=TRUE], " (", df[1, 'european_party', drop=TRUE], ", ", trunc(df[1, 'nationality', drop=TRUE]), ")", sep="")
     return(text)
   }
 }
 
 workdir <- getwd()
 df <- read.csv(paste(workdir, "/reduced_output.csv", sep=""))
-df$twitter_birthday <- as.Date(df$twitter_birthday, "%Y-%m-%d %H:%M:%S")
+df$twitter_birthday <- as.Date(df$twitter_birthday, "%Y-%m-%d")
   
 df$european_party <- sapply(df$european_party, party)
 df$minority_mep <- sapply(df$european_party, minorityParty)
@@ -188,7 +188,7 @@ print(xtable(table_1, caption="MEPs' Tweet Behavior"), include.rownames=FALSE, c
 
 <<table_2, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 party_group <- aggregate(mean_tweets ~ european_party, df, median)
-party_group$european_party <- sapply(party_group$european_party, party)
+
 party_group <- party_group[order(-party_group$mean_tweets), ]
 party_group$mean_tweets <- round(party_group$mean_tweets, 1)
 colnames(party_group) <- c("Party group", "Median number of tweets per MEP per day")
@@ -229,33 +229,6 @@ colnames(table_4) <- c("Item", "Result", "Corresponding MEP or count")
 print(xtable(table_4, digits=c(0,0,1,0), caption="@-Replies by MEPs"), floating=TRUE, include.rownames=FALSE, caption.placement="top", table.placement="H")
 @
 
-<<table_5, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
-mean_native_tweets <- mean(subset(df$total_native, df$twitter_handle != ""))
-median_native_tweets <- median(subset(df$total_native, df$twitter_handle != ""))
-max_native_tweets <- max(subset(df$total_native, df$twitter_handle != ""))
-min_native_tweets <- min(subset(df$total_native, df$twitter_handle != ""))
-  
-mean_non_native_tweets <- mean(subset(df$total_non_native, df$twitter_handle != ""))
-median_non_native_tweets <- median(subset(df$total_non_native, df$twitter_handle != ""))
-max_non_native_tweets <- max(subset(df$total_non_native, df$twitter_handle != ""))
-min_non_native_tweets <- min(subset(df$total_non_native, df$twitter_handle != ""))
-
-native_stats <- paste(round(mean_native_tweets, 1), median_native_tweets, max_native_tweets, min_native_tweets, sep=", ")
-non_native_stats <- paste(round(mean_non_native_tweets, 1), median_non_native_tweets, max_non_native_tweets, min_non_native_tweets, sep=", ")
-
-percent_non_native <- round((sum(df$total_non_native) / sum(df$total_tweets)) * 100, 1)
-
-top_non_native_tweeters <- mepColumn(df[order(df$total_non_native, decreasing=TRUE), ][1, ])
-
-never_non_native <- mepColumn(subset(df, df$total_non_native == 0 & df$twitter_handle != "" & df$total_tweets > median_number_of_tweets)[1, ])
-
-headers <- c("Tweets in native language (mean, median, max, min)", "Tweets in non-native language (mean, median, max, min)", "Percent tweets in MEP's non-native language", "Most prolific non-native language tweeters", "MEPs who never tweeted in a non-native language")
-output <- c(native_stats, non_native_stats, percent_non_native, top_non_native_tweeters, never_non_native)
-table_5 <- data.frame(headers, output)
-colnames(table_5) <- c("Item", "Result")
-print(xtable(table_5, caption="Tweets by Language"), include.rownames=FALSE, caption.placement="top", table.placement="H")
-@
-
 <<table_7, cache=FALSE, echo=FALSE, message=FALSE>>=
 library(stargazer)
 end_date <- as.Date("2014-09-01")
@@ -284,10 +257,15 @@ age_calc <- function(dob, enddate=end_date, units='years'){
 
 df$num_born <- sapply(as.Date(df$born), age_calc)
 calcBirthday <- function(x) {
-  return(end_date - x)
+  if(is.na(x)) {
+    return(NA)
+  } else if(x > end_date) {
+    return(end_date)
+  } else {
+    return(end_date - x)
+  }
 }
-df$num_twitter_birthday <- sapply(df$twitter_birthday, calcBirthday)
-
+df$num_twitter_birthday <- sapply(as.Date(df$twitter_birthday, "%Y-%m-%d"), calcBirthday)
 onTwitter <- function(x) {
   if(x != '') {
     return(1)
@@ -299,8 +277,7 @@ df$on_twitter <- sapply(df$twitter_handle, onTwitter)
 df["internal_cohesion_score_2009.2014"][is.na(df["internal_cohesion_score_2009.2014"])] <- 0
 
 on_twitter_logit <- glm(factor(on_twitter) ~ WEF_Global_IT_score_2014 + GDP_per_capita_PPS_2013 + Median_age_2014 + Press_freedom_2014 + num_born + factor(gender) + factor(right_left) + minority_mep + internal_cohesion_score_2009.2014 + share_2009.share_2014 + Electoral_system, data=df, family="binomial")
-print(sapply(df, function(x) sum(is.na(x))))
-print(summary(on_twitter_logit))
+#print(sapply(df, function(x) sum(is.na(x)))) # Use to check NA values
 @
 
 <<table_8, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
@@ -325,7 +302,6 @@ library("MASS")
 replies_fit_glm_nb <- glm.nb(total_screen_name_replies ~ WEF_Global_IT_score_2014 + GDP_per_capita_PPS_2013 + Median_age_2014 + Press_freedom_2014 + num_born + factor(gender) + factor(right_left) + minority_mep + internal_cohesion_score_2009.2014 + share_2009.share_2014 + Electoral_system, data=tweeters)
 
 #print(xtable(replies_fit_glm_nb, caption="Total @-Replies GLM Negative Binomial"), caption.placement="top", table.placement="H")
-
 @
 
 <<regression_table, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
