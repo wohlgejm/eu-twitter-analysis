@@ -104,7 +104,8 @@ Studies of Twitter use among national legislators (Ausserhoffer and Maireder 201
 	 
 	 Beyond the many research avenues that would effectively treat Twitter use or tweets as dependent variables, there are many potentially fecund questions that would inquire into the possible effects of Twitter use.  Does David Coburn's Twitter hyperactivity increase voters' familiarity with him? Does it increase citizen knowledge of the EP and/or the EU? Does it trigger more active engagement with other MEPs? With other EU institutions, with national politics? These are but a few of the questions that are ripe for future analysis. 
 
-{\fontsize[10] 
+\begingroup
+    \fontsize{8pt}{10pt}\selectfont
 <<table_1, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 library(xtable)
 end_date <- as.Date("2014-09-01")
@@ -220,7 +221,7 @@ table_1 <- data.frame(headers, output, mep)
 colnames(table_1) <- c("Item", "Result", "Corresponding MEP or count")
 print(xtable(table_1, caption="MEPs' Tweet Behavior"), include.rownames=FALSE, caption.placement="top", table.placement="H")
 @
-}
+
 <<table_2, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 party_group <- aggregate(mean_tweets ~ european_party, df, median)
 
@@ -341,6 +342,7 @@ replies_fit_glm_nb <- glm.nb(total_screen_name_replies ~ WEF_Global_IT_score_201
 <<regression_table, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
 stargazer(on_twitter_logit, twitter_birthday_glm_nb, total_tweets_fit_glm_nb, replies_fit_glm_nb, title="Regression Results", covariate.labels=c("District technology", "District wealth", "District age", "District press freedom", "MEP age", "MEP gender", "Left MEP", "Minority MEP", "Inchoate MEP", "Endangered MEP", "Electoral system"), dep.var.labels=c("On Twitter", "Twitter Birthday", "Total Tweets", "Total @-Replies"), no.space=TRUE)
 @
+\endgroup
 
 \clearpage
 \bibliographystyle{apacite}
