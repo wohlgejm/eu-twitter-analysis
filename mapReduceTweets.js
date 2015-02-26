@@ -11,8 +11,8 @@ var checkReply = function(x) {
 // WARNING: This functions takes a while to complete
 // To test count of MEPs in staging: db.staging.aggregate({$group: {_id: "$name"} }, {$group: {_id: 1, count: {$sum: 1} } })
 var stageFunc = function(meps) {
-	var start_date = new Date(2014, 9, 1);
-	var end_date = new Date(2014, 11, 30);
+	var start_date = ISODate("2014-09-01T00:00:00.00.000Z");
+	var end_date = ISODate("2014-11-30T00:00:00.000Z");
   meps.forEach(function(mep) {
     if(mep.tweets.length > 0) {
       var valid_tweets = 0;
