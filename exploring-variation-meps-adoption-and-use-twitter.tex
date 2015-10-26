@@ -1,4 +1,4 @@
-\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+\documentclass[12pt]{article}\usepackage[]{graphicx}\usepackage[]{color}
 %% maxwidth is the original width if it is less than linewidth
 %% otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
@@ -48,83 +48,290 @@
 \newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
 
 \usepackage{alltt}
-\usepackage[margin=0.5in]{geometry}
+\usepackage[margin=1in]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage{float}
+\usepackage{apacite}
+\usepackage{lscape}
+\usepackage{setspace}
+\usepackage{dcolumn}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
-The European Parliament (EP), despite its status as the most recognized EU institution \cite[e.g.,]{eurobarometer.2014}, still struggles to communicate its mission and relevance to European citizens \citep*{anderson.mcleod.2004}. Turnout for EP elections remains low \citep*{hobolt.2014, franklin.hobolt.2011, mattila.2013}, citizens tend to see EP elections as "second-order" events \citep*{hix.marsh.2007, schmitt.2005}, and Europeans routinely fail to follow and recall EP-related news \citep*{eurobarometer.2013}. 
-  	
-		For all of these reasons, one might expect members of the European Parliament (MEPs) to embrace Twitter and other Web 2.0 technologies. Theoretically, these technologies could help MEPs to narrow representational gaps, to publicize MEPs' work to audiences that matter (e.g., national party elites, organizational supporters, citizens at large), and to increase citizens' sense of political efficacy. While Twitter has become an increasingly mainstream tool of political campaigning and has been used by incumbent politicians across a wide range of national contexts, this paper begins with the observation that there is significant variation in the extent and nature of MEPs' Twitter use. We demonstrate this variation empirically and seek to seek to determine the factors that drive variation in MEPs' Twitter use.
-		
-		We are specifically concerned with questions about regarding Twitter adoption, tweet frequency, and the quality of MEPs' Twitter use. With regard to adoption, we examine why some MEPs are early adopters while others have eschewed the technology altogether.  With regard to tweet frequency, we investigate why some MEPs tweet more than others.  And, perhaps most importantly, with regard to quality, we examine two dimensions of MEPs Twitter usage. First, we investigate MEPs' language choices (e.g., in which language/s do MEPs tweet?). This investigation generates some insight into the ways that MEPs understand Twitter's value and the audiences they seek to reach. Second, we examine the nature of MEPs' published tweets.  As Ausserhofer and Maireder \citepyear{ausserhofer.maireder.2013} have suggested, politicians can use Twitter in at least two ways. They use it to diffuse information--to \emph{broadcast} details about activities, positions, and opinions. But they also use it to \emph{interact} with specific interlocutors via @-replies and @-mentions. Both kinds of uses can, theoretically, promote deliberation and democratic deepening. We suggest below, however, that conversational interaction via Twitter is particularly important as a possible means of overcoming communication and democratic deficits.
-		
-		In the following sections, we discuss the value and limitations of Twitter as a representational tool for MEPs. We present theoretically derived intuitions about the various factors--constituency-based factors, personal factors, and strategic factors--that might explain variation in MEPs' Twitter use. After discussing data and methods, we present descriptive statistics and multivariate regression results. We argue that ********. We conclude the paper by discuss the implications of our findings and sketching out potential future research trajectories.
-		
-		
-	 Twitter: An Attractive Representational Tool for MEPs? 
-	 
-		Internet technologies expand the number of communicative channels available to candidates and representatives. Legislators are prolific communicators. On a given workday, they interact directly with colleagues, staffs, counterparts in other governing institutions, journalists, and various societal stakeholders. In addition to their direct interactions, they oversee communications designed to reach diffuse mass audiences. To broadcast their activities to the masses, lawmakers have traditionally relied upon direct mailing, e-mail messages, and various institutions, including parties, the press, broadcast media, public relations firms, and civil societal organizations. To manage incoming communications, they have depended upon personal staffs and party organizations. 
-		
-		Web 1.0 technologies (e.g., candidate, party, and personal web pages) allow legislators to broadcast a consistent message and to archive and showcase their professional efforts\citep*{adler.gent.overmeyer.1998}. Web 2.0 technologies like Twitter and Facebook prioritize interactivity and enable more immediate and spontaneous exchanges between legislators and the public. Online tools rarely displace more established channels. Indeed, channels frequently feed off of each other: politicians' pithiest tweets, for example, are taken up by journalists, and the buzz generated by the press's coverage of the tweet feeds back to affect interactions between legislators and their various face-to-face interlocutors.
-	 
-		Unlike Internet technologies that enable interventions of indeterminate length, Twitter imposes on users a notorious 140-character limit. The limit makes deep dialogical exchanges unlikely, rendering long-form interventions and debates tedious and difficult-to-follow. And while Twitter users frequently fall into a banality trap--"Thanks!", "Check this out!", "Right!," etc.--the character limit can also encourage a certain synthetic nimbleness or "haiku effect." The proliferation of virtual and hard-copy compilations of tweets testifies to the character limit's muse-like role. In addition, Twitter's premium on spontaneity and immediacy can encourage conversational repartee and information exchange in a way that ultimately promotes deep thinking about public problems and/or more articulated debates in offline or more formally permissive online forums. 
-	 
-		The 140-character limit notwithstanding, Twitter is a flexible medium. Legislators can use the medium to broadcast political activity (e.g., "Meeting with EPP colleagues," "My intervention on Mali at today's EP plenary"), to respond directly to followers' questions, to republish (retweet) content originally distributed by other users, to weigh in on questions asked elsewhere in the Twittersphere, and more. In addition, Twitter allows MEPs to address themselves to multiple linguistic communities. The EP has 24 official languages, and MEPs might choose to tweet in more than one of these languages (and/or, for example, in unofficial but politically resonant languages like Catalán, Galician, or Welsh) for strategic political reasons or to signal responsiveness to specific interlocutors or more diffuse mass audiences \citep*{deSwaan.1993}.
-	 
-		The characteristics that are often associated with Twitter--immediacy, interactivity, spontaneity, personality, informality--are congruent with a media zeitgeist that equates speed with quality. They are also likely to resonate in a European context that is increasingly characterized by rising levels of social mistrust \citep*{dogan.2005, pharr.putnam.dalton.2000}, where traditional institutions like political parties \citep*{vanbiezen.poguntke.2014, vanbiezen.mair.poguntke.2012, whitely.2011}, religious organizations \citep*{burkimsher.2014, voas.2007, voas.2009}, and labor unions \citep*{ebbinghaus.2002, vanbiezen.poguntke.2014} are losing members. Twitter's defining characteristics contrast with postwar "politics as usual" and tap into public frustrations with the status quo. For these reasons, we might expect MEPs to flock to Twitter.
-		
-		Perhaps the most important reason to expect widespread adoption and use, though, has to do with the relative invisibility of the EP and particular MEPs in comparison to other political actors. As noted above, the EP is the EU's most widely recognized institution--Eurobarometer surveys consistently show that more citizens have heard of the EP than they have of the Commission, the Council, or the Court of Justice. Beyond such superficiality, though, the EP and its members struggle to distinguish themselves and to showcase their relevance. A May 2014 poll in the United Kingdom, for example, revealed that only 11 percent of voters were confident that they could name one of their MEPs; this contrasted with the 52 percent of voters who thought they could name their (Westminster) MP and the 31 percent that could name a local councillor \citep*{coman.helm.2014}. The personalization of the 2014 EP election campaign and the competition between party groups' \emph{Spitzenkandidaten} may have helped to stem the trend of falling EP voter turnout, but community-wide turnout remains lower than turnout for national elections in most member-states. Citizens struggle to retain EP-specific news items \citep*{eurobarometer.2013}. The EP's continuing efforts to increase its physical and virtual presences (through institutional social media efforts, an on-line television station, offices in the member states, the Parliamentarium, the planned House of European History, etc.) have struggled to deepen Europeans' familiarity with the institution and its incumbents, despite the EP's decades-long expansion of legislative and broader political power (**cites).
-		
-		Despite Twitter's attractions, 31 percent of current (2014-2019) MEPs have thus far decided \emph{not} to establish a Twitter account. The 69 percent of MEPs with accounts use Twitter in very different ways. Why? The literature on politicians' Twitter use provides a number of potential answers to this question. To date, there has been no comprehensive academic analysis of sitting MEPs' Twitter activity. But existing literatures on Twitter use among EP \emph{candidates} \citep*{vergeer.hermans.sams.2011,vergeer.hermans.sams.2013}), Twitter use among sitting sitting national legislators \citep*{ausserhofer.maireder.2013, chi.yang.2010, glassman.strauss.shogan.2013, larsson.kalsnes.2014, peterson.2012, shogun.2010, williams.gulati.2010} and digital communication adoption more broadly \citep*{adler.gent.overmeyer.1998, chen.2010, gibson.rommele.2001, gibson.ward.2009, hargittai.2008, hernnson.stokes-brown.hindman.2007, wei.lo.2006} help to generate a number of alternative explanations.  Following in the footsteps of some of these authors, we distinguish among three potentially important sets of characteristics--constituency characteristics, MEPs' personal characteristics, and structural/strategic characteristics.
-		
-		Constituency hypotheses.
-		
-		Personal hypotheses.
-		
-		Structural/strategic hypotheses.
-		
-		Etc.
+\title{Exploring Variation in MEPs\textquotesingle{} Adoption and Use of Twitter as a Representational Tool}
+\author{John Scherpereel, Peg Schmelzinger, Jerry Wohlgemuth}
+\maketitle
+\abstract{Members of the European Parliament (MEPs) struggle to connect with European publics. Few European Union (EU) citizens feel a sense of connection to their MEPs. Turnout for European Parliament (EP) elections remains low, and EU citizens struggle to retain EP-related news. For these and other reasons, we might expect MEPs to embrace social media platforms, like Twitter, that facilitate interactivity, spontaneity, personality, and informality. In reality, significant variation characterizes the timing and nature of MEPs’ engagement with Twitter. In this paper, we document and seek to explain elements of this variation. We examine four dimensions of MEP engagement with Twitter: Do MEPs establish Twitter accounts? Are they early adopters? How frequently do they publish tweets? And do they engage in direct conversations via Twitter’s @-reply functionality? We find that MEPs from left parties and young MEPs are particularly likely to use Twitter and to use Twitter conversationally. In addition, member-states' technological levels and EP electoral systems affect MEPs’ approaches to Twitter. Our findings generate insights into the changing nature of political communication and diverse patterns of political representation in today’s European Union.\\
+\thispagestyle{empty}
+\vfill
+\centering Prepared for presentation at the biennial meeting of the European Union Studies Association, Boston, MA, March 2015.\par}
+\clearpage
 
+\onehalfspacing
+      	The European Parliament (EP), despite its status as the most recognized EU institution \cite{eurobarometer.2014}, still struggles to communicate its mission and relevance to European citizens \cite{anderson.mcleod.2004}. Turnout for EP elections remains low \cite{hobolt.2014, franklin.hobolt.2011, mattila.2003}, citizens tend to see EP elections as "second-order" events \cite{hix.marsh.2007, schmitt.2005}, and Europeans routinely fail to follow and recall EP-related news \cite{eurobarometer.2013}. 
+    
+		For all of these reasons, one might expect members of the European Parliament (MEPs) to embrace Twitter and other Web 2.0 technologies. Theoretically, these technologies could help MEPs to narrow representational gaps, to publicize MEPs' work to audiences that matter (e.g., national party elites, organizational supporters, citizens at large), and to increase citizens' sense of political efficacy. While Twitter has become an increasingly mainstream tool of political campaigning and has been used by incumbent politicians across a wide range of national contexts, this paper begins with the observation that there is significant variation in the extent and nature of MEPs' Twitter use. We demonstrate this variation empirically and seek to seek to determine the factors that drive variation in MEPs' Twitter adoption and use.
+		
+		We are specifically concerned with questions involving Twitter adoption, tweet frequency, and the quality of MEPs' Twitter use. With regard to adoption, we examine why some MEPs are early adopters while others have eschewed the technology altogether. With regard to tweet frequency, we investigate why some MEPs tweet more than others.  And with regard to quality, we examine the nature of MEPs' published tweets.  As Ausserhoffer and Maireder \citeyear{ausserhoffer.maireder.2013} have suggested, politicians can use Twitter in at least two ways. They can use it to diffuse information--to \emph{broadcast} details about activities, positions, and opinions. But they can also use it to \emph{interact} with specific interlocutors. Both kinds of uses can, theoretically, promote deliberation and democratic deepening. We suggest below, however, that conversational interaction via Twitter is particularly important as a possible means of overcoming communication and democratic deficits.
+		
+		In the following sections, we discuss the value and limitations of Twitter as a representational tool. We present theoretically driven intuitions about factors that might explain variation in MEPs' Twitter adoption and use. After discussing data and methods, we present descriptive statistics and multivariate regression results. We argue that MEPs' personal characteristics (especially left status and youth), constituency characteristics (especially the technological level of the member-state), and structural/strategic factors (including the electoral system and MEPs' sense of political threat) condition MEPs' engagement with Twitter. We conclude the paper by discussing the implications of our findings and sketching out possible future research trajectories.
+		
+\section*{Twitter: An Attractive Tool for MEPs?} 
+	 
+		Internet technologies expand the number of communicative channels available to candidates and representatives. Legislators are prolific communicators. On a given workday, they interact directly with colleagues, staffs, counterparts in other governing institutions, journalists, and a variety of societal stakeholders. In addition to their direct interactions, they oversee communications designed to reach diffuse mass audiences. To broadcast their activities to the masses, lawmakers have traditionally relied upon direct mail, e-mail, and various intermediary institutions, including parties, the press, broadcast media, public relations firms, and civil societal organizations. To manage incoming communications, they have depended upon personal staffs and party organizations. 
+		
+		Web 1.0 technologies (e.g., candidate, party, and personal web pages) allow legislators to broadcast a consistent message and to archive and showcase their professional efforts \cite{adler.gent.overmeyer.1998}. Web 2.0 technologies like Twitter and Facebook prioritize interactivity and enable more immediate and spontaneous exchanges between legislators and the public. Online tools rarely displace more established channels. Indeed, channels frequently feed off of each other: politicians' pithiest tweets, for example, are taken up by journalists, and the buzz generated by the press's coverage of tweets feeds back to affect interactions between legislators and their various face-to-face interlocutors.
+	 
+		Unlike Internet technologies that enable interventions of indeterminate length, Twitter imposes a notorious 140-character limit. The limit makes deep dialogical exchanges unlikely, rendering long-form debates tedious and difficult-to-follow. And while Twitter users frequently fall into a banality trap--"Thanks!", "I agree", "Right!," etc.--the character limit can also encourage a certain synthetic nimbleness or "haiku effect." The proliferation of virtual and hard-copy compilations of tweets testifies to the character limit's muse-like role. In addition, Twitter's premium on spontaneity and immediacy can encourage conversational repartee and information exchange in a way that ultimately promotes deep thinking about public problems and/or more articulated debates in offline or more formally permissive online forums. 
+	 
+		The character limit notwithstanding, Twitter is a flexible medium. Legislators can use Twitter to broadcast political activity (e.g., "Meeting with EPP colleagues," "My intervention on Mali at today's EP plenary"), to republish (retweet) content published by other users, to weigh in on trending debates, to refer followers to other online content via hyperlinks and hashtags, and more. Twitter's @-reply function also presents MEPs with a valuable opportunity. Tweets that begin with @-username allow users to engage in direct conversations with followers. While research on national legislatures suggests that politicians rarely avail themselves of this more participatory, dialogical function \cite{shogan.2010}, @-replies might be particularly attractive to attention-starved MEPs.
+	 
+		The characteristics that are often associated with Twitter--immediacy, interactivity, spontaneity, personality, informality--are congruent with a media zeitgeist that equates speed with quality. They are also likely to resonate with a Europe in which social mistrust is rising \cite{dogan.2005, pharr.putnam.dalton.2000} and traditional institutions like political parties \cite{vanbiezen.poguntke.2014, vanbiezen.mair.poguntke.2012, whiteley.2011}, religious organizations \cite{burkimsher.2014, voas.2007, voas.2009}, and labor unions \cite{ebbinghaus.2002, vanbiezen.poguntke.2014} are under threat. Twitter's defining characteristics contrast with postwar "politics as usual" and tap into public frustration with the status quo. For these reasons, we might expect MEPs to flock to Twitter.
+		
+		Perhaps the most important reason to expect widespread adoption and use, though, has to do with the relative invisibility of the European Parliament and of particular MEPs in comparison with other political actors. As noted above, the EP is the EU's most widely recognized institution. Eurobarometer surveys consistently show that more citizens have heard of the EP than they have of the Commission, the Council, or the Court of Justice. Beyond such superficiality, though, the EP and its members struggle to showcase their relevance. A May 2014 poll in the United Kingdom, for example, revealed that only 11 percent of voters were confident that they could name one of their MEPs; this contrasted with the 52 percent of voters who thought they could name their (Westminster) MP and the 31 percent that could name a local councillor \cite{coman.helm.2014}. The personalization of the 2014 EP election campaign and the competition between the\emph{Spitzenkandidaten} may have helped to stem the trend of falling EP voter turnout, but community-wide turnout remains lower than turnout for national elections in most member-states. Citizens struggle to retain EP-specific news items \cite{eurobarometer.2013}. The EP's continuing efforts to increase its physical and virtual presences--through institutional social media efforts, an on-line television station, offices in the member states, the Parliamentarium, the planned House of European History, etc.--have yet to achieve for the EP the kind of familiarity and recognition to which most parliamentary staff and MEPs aspire. MEPs' relative invisibility persists, of course, in spite of the EP's decades-long expansion of power \cite{corbett.jacobs.shackleton.2011, rittberger.2005}.
+		
+	Despite Twitter's attractions, approximately one quarter (23.8 percent) of current (2014-2019) MEPs have thus far decided \emph{not} to establish a Twitter account. And the 76.2 percent of MEPs who have established accounts use Twitter in very different ways. Why? The literature on other politicians' Twitter use provides a number of potential answers to this question. While some scholars have analyzed the EP's institutional social media presence \cite{leston-bandeira.bender.2013}, no comprehensive academic analysis of sitting MEPs' Twitter activity exist. Existing literatures on Twitter use among EP \emph{candidates} \cite{vergeer.hermans.sams.2011,vergeer.hermans.sams.2013}, Twitter use among sitting sitting national legislators \cite{ausserhoffer.maireder.2013, chi.yang.2011, glassman.straus.shogan.2013, larsson.kalsnes.2014, peterson.2012, shogan.2010} and digital communication adoption more broadly \cite{adler.gent.overmeyer.1998, chen.2010, gibson.rommele.2001, gibson.ward.2009, hargittai.2007, hernnson.stokes-brown.hindman.2007, williams.gulati.2010, williams.gulati.2011, wei.lo.2006} help to generate a number of alternative explanations of different adoption and use patters. Following these authors, we can distinguish among three potentially important sets of characteristics--constituency characteristics, personal characteristics, and structural/strategic characteristics--that might affect the ways that MEPs use (and don't use) Twitter.
+    
+    	In the context of the EP, \emph{constituency-based} intuitions suggest that Twitter use will vary along national lines. There are different ideas, however, about which specific national factors might drive the variation. Multiple studies, for example, suggest that politicians from more technologically savvy constituencies will be more likely to adopt and use new information and communications technologies \cite{adler.gent.overmeyer.1998, hernnson.stokes-brown.hindman.2007, peterson.2012, chadwick.2006, klotz.2004}. Given the relatively high correlation between district wealth and ICT savviness, Chadwick \citeyear{chadwick.2006} posits that legislators from wealthy districts will be more likely to adopt new technologies. 
+	
+	Other strands in the literature suggest that a constituency's youthfulness may be more important than its level of wealth; legislators representing young constituents might use Twitter more than legislators from old districts \cite{peterson.2012}. MEPs' Twitter behavior could also be driven by their respective national media landscapes. The exact nature of the relationship, however, is debatable. Insofar as studies \cite{ausserhoffer.maireder.2013, glassman.straus.shogan.2013, williams.gulati.2010} suggest that politicians are more likely to use 2.0 technologies to court press coverage than they are to directly engage citizens, one might expect MEPs from countries with strong independent media landscapes to tweet more. On the other hand, one might reasonably extrapolate from the literature on social media in closed political systems \cite{diamond.plattner.2012, shirky.2011} and hypothesize that social media linkages can compensate for weaknesses in a country's broader media system. In other words, where "official" media are weak, subservient to the state, and/or poorly institutionalized, legislators might find direct links via channels like Twitter to be more attractive.
+    
+    	\emph{Personal characteristics} might also drive MEPs' Twitter behavior. Young age cohorts in developed countries are "digital natives." They have never known a world without computers and tend to have a stronger intuitive grasp of online technologies than the "digital immigrants" of older cohorts. We might, therefore, expect younger MEPs to use Twitter more than older MEPs \cite{bolton.et.al.2013, peterson.2012}. Gender may or may not affect MEPs interface with Twitter. As is the case with media landscape, insights from debates about the gendered nature of ICT adoption and use point in multiple directions. Strands in the broader literature suggest that women are more likely to embrace social media than men \cite{hargittai.2007} and that women use new communications technologies more dialogically than broadcast-oriented men \cite{wei.lo.2006}. But the more targeted literature on social media usage among parliamentary candidates and sitting legislators finds that men tend to use social media more than women \cite{vergeer.hermans.sams.2011, ausserhoffer.maireder.2013}. 
+      
+      An MEP's length of EP tenure might also influence his or her propensity to tweet. While few studies suggest that tenure strongly affects legislators' voting behavior \cite{urich.1959}, there is still reason to expect that "new" legislators will be less well-established, less integrated into important networks, and less able to gain immediate respect than more seasoned peers \cite{peterson.2012}; an active twitter feed might create buzz around an MEP with a short tenure of service and help to compensate for some of these deficits. 
+    
+    	Other potentially important personal characteristics involve partisan identification and parliamentary arithmetic. Studies of ICT adoption in the US Congress, for example, routinely show that Republicans are the trailblazers \cite{chi.yang.2011, gibson.rommele.2001, glassman.straus.shogan.2013, shogan.2010}. Vergeer et al. \citeyear{vergeer.hermans.sams.2011} present a theoretical rationale for expecting the right to tweet more--insofar as ICT adoption is associated with things like corporate communications and "business-like" political strategies, one might expect politicians of the right to tweet early and often. A theoretical intuition linking the left to social media is at least as plausible, however. Platforms like Twitter shrink the symbolic distance between representatives and represented, promote social dialogue, and give voice (at least theoretically) to populations traditionally excluded from the corridors of power. A similar debate characterizes theorizing about whether members of dominant or subordinate (e.g., governing or opposition) political parties are more likely to "go social." Chen \citeyear{chen.2010} refers to this debate the "normalization vs. equalization debate." On the "normalization" side, it can be argued that while it is very cheap to set up a Twitter account, it is more costly to sustain a consistent "Twitter presence." MEPs from well-represented party groups might be disproportionately able to leverage the Twitter echo chamber by gaining followers in the press. And well-resourced party organizations might be more likely than poorly resourced peers to oversee coordinated and sophisticated social media communication strategies \cite{gibson.ward.2009, vergeer.hermans.sams.2011}. On the "equalization" side, subordinate and opposition parties might use social media cut through the press's frequently bemoaned "cover-the-leader" bias \cite{ausserhoffer.maireder.2013, cook.1998, peterson.2012, williams.gulati.2011}. Finally, in the EP context, analysts have often remarked on the discrepancy between highly cohesive party groups like the EPP and S\&D, on one hand, and more fissiparous party groups like the EFDD, on the other. Insofar as "party (group) branding" carries less weight for MEPs from more inchoate party groups and non-attached MEPs, we might expect such MEPs to use Twitter more.  
+	
+    	The third set of factors involves \emph{strategic and structural} characteristics. In the context of the US Congress, Peterson \citeyear{peterson.2012} finds that Members of Congress who have won their seats by tight margins are more likely to use Twitter than Members of Congress who have won by comfortable margins. "Closer winners," he suggests, feel a more acute exit threat than those who have faced weak electoral resistance in the recent past. In the EP context, we might expect members of parties whose victory margins have recently shrunk to feel a similar compulsion to connect. 
+      
+      Electoral institutions might also affect MEPs' relationships to Twitter. While all member states use some form of proportional representation for EP elections, there is evidence \cite{hix.2004} that legislators elected in more candidate-centered PR variants (e.g., single-transferable vote, open-list PR) behave differently than legislators elected on closed lists. Although his empirical analysis of Australian, Canadian, and New Zealand legislators does not bear out the intuition, Chen \citeyear{chen.2010} nonetheless tests the notion that parliamentarians operating in personalized contexts might be more likely to utilize more personal channels like Twitter. Since MEPs are elected through a variety of systems, the EP context provides a strong opportunity to further test this intuition.
+    
+\section*{Data and Methods}
 
-% latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Thu Feb 12 13:57:48 2015
-\begin{table}[ht]
+    Our analysis involves scrutiny of MEPs' Twitter behavior in the early days of the seventh (2014-2019) EP session. Specifically, we used the Twitter application programming interface (API) to capture all MEP tweets between September 1, 2014 and November 30, 2014--a universe of 168,175 tweets. Each tweet is associated with a particular MEP, and our unit of analysis is the individual MEP. 
+    
+    Our statistical models include four dependent variables, which gauge the extent and nature of MEP engagement with Twitter. First, we determine whether an MEP had a Twitter account as of September 1, 2014 (0=no, 1=yes). Second, we calculate the length of time, in days, that each MEP has had a Twitter account, again using September 1, 2014 as a cut-off. Third, we count the number of tweets published by each MEP over the 88-day observed period. Fourth, to gauge the extent to which MEPs use Twitter as a means of direct dialogical engagement, we perform a count of each MEP's @-replies over the examination period. 
+    
+    The indicators for our constituency-based independent variables are defined at the member-state level.\footnote{At present, six countries (Belgium, France, Ireland, Italy, Poland, and the United Kingdom) divide their territory into multiple constituencies for EP elections. While there is evidence that their decision to do so might affect the relationships between MEPs and constituents \cite{bowler.farrell.1993, hix.2004}, most of our indicators are available only at the country level. All Belgian MEPs in our dataset take the overall Belgian World Economic Forum Global Information Technology score for the Global IT variable.} For \emph{District technology}, we integrate the World Economic Forum's Global IT scores for 2014 \cite{bilbao-osorio.dutta.lanvin.2014}. For \emph{District wealth}, we use 2013 Eurostat data on GDP per capita in purchasing power standards \cite{eurostat.2014}. For \emph{District age}, we use estimated median ages as reported in the CIA World Factbook \cite{cia.2014}, and for \emph{District median freedom} we use the Reporters Without Borders World Press Freedom Index 2014 \cite{rsf.2014}.
+    
+    Our variables on \emph{MEP age} and \emph{MEP gender} come from the EP's web site (www.europarl.eu). To determine \emph{MEP tenure}, we sum the total number of days served as an MEP as of September 1, 2014; the raw data for that calculation come from the EP Research Service. We construct a dichotomous indicator for \emph{Left MEP}, coding all MEPs from the ALDE, Green-EFA GUE-NGL, and S\&D party groups as "left" (1) and all MEPs from the ECR, EPP, and EFDD groups as "right" (0).\footnote{We code ALDE as "left" since the party group has traditionally championed the social principles--transparency, openness, and the centrality of citizen participation--upon which the intuition that "the left will use Twitter more" relies.} In addition, we code all non-attached MEPs according to the left-right ideology of their respective national parties (only three of the 52 non-attached MEPs are coded "left"). For \emph{Minority MEP}, we code members from party groups that overwhelmingly supported the Juncker Commission (EPP, S\&D, ALDE) as "governing" (0) and (a) members from groups that overwhelmingly rejected the Juncker Commission and (b) non-attached members as "opposition" (1). To test the notion that MEPs from less cohesive party groups will engage more with Twitter, we construct \emph{Inchoate MEP}. This indicator subtracts the group's 2009-2014 Votewatch cohesion score \cite{thillaye.2014} from 100, which assures that MEPs from more inchoate groups have higher values. We code non-attached members as "missing" for this measure.
+    
+    For structural and strategic characteristics, our indicator for \emph{Endangered MEP} subtracts the share of the 2014 EP vote won by an MEP's national party from the share of the 2009 EP vote won by that MEP's party; this value, which can be negative, derives from the EP's 2014 \emph{Les elections europeennes et nationales en chiffres} report \cite{ep.2014}.  Finally, we construct a variable for \emph{Electoral system} by considering the degree of electoral system personalization. MEPs elected via closed-list PR take the value of "0." MEPs elected via PR with preferential voting take "1," and MEPs elected via STV take "2."
+    
+    All four of our models integrate the full set of independent variables. Because our first dependent variable is dichotomous, we use a logistic regression model. Our other three dependent variables rely on counts (of days, tweets, and @-tweets, respectively). For these models, we employ negative binomial regression.
+
+\section*{MEPs on Twitter: Descriptive Statistics}
+
+    Tables 1-4 present descriptive statistics on MEPs' Twitter adoption and use. As Table 1 shows, 572 of 751 (76.2 percent) of MEPs had established a Twitter account as of September 1, 2014. Among MEPs who have established accounts, there is significant variation in the frequency with which they tweet. The fact that 232 users average zero tweets per day over the observed span suggests that an additional 53 MEPs (7.1 percent of all MEPs) have moribund accounts. These "faux non-users" present a marked contrast with the EP's most active tweeter--UKIP's David Coburn, who publishes a rather staggering 62.6 tweets per day, on average--and a moderate contrast with the median MEP, who published 154.5 tweets over the 88 sampled days.
+  
+    Tables 2 and 3 summarize tweet frequencies by party group and member-state. Table 2's left-right gradient is striking. The EFDD, whose median member tweets 1.8 times per day, is the exception to the rule that MEPs from "left" factions tweet more than MEPs from "right" factions. Also notable is the fact that the median non-attached member publishes zero tweets per day. Overall, the country-specific data reported in Table 3 suggest a northwest vs. southeast axis. Of the seven countries whose median MEP tweets zero times each day, five are in central and eastern Europe, and two (Greece and Portugal) are in southern Europe. There are a number of regional exceptions. Spanish, Slovenian, and Italian MEPs, for example, are all in the top third of the table. German MEPs stand out among MEPs from founding member--states. Along with the median Croatian, Polish, and Slovak MEP, the median German MEP publishes 0.1 tweets per day.
+    
+      Previous studies of dialogical engagement (@-replying) among national MPs \cite{shogan.2010} suggest that politicians have been much more likely to use Twitter for "broadcasting" than for "chatting." Table 4 suggests that while MEPs clearly prefer broadcast tweets to dialogical tweets, they have not eschewed @-replies altogether. Of the 168,175 tweets published in our sample period, 23,220 (13.8 percent) were @-replies. More than half of all MEPs (411, or 54 percent) sent at least one @-reply over the course of these three months.  The median number of @-replies per MEP was 5.  As in the case of overall Twitter behavior, there are a number of @-replying outliers. Again, David Coburn (EFDD, UK) stands foremost among them. On average, almost 16 of Coburn's nearly 63 daily tweets are @-replies.
+      
+      Overall, the descriptive statistics suggest that MEPs are using Twitter in very different ways, that left MEPs are more active than right MEPs, that MEPs from northern (particularly anglophone) Europe are more active than their southern and eastern counterparts, and that MEPs tend to favor broadcasting over conversation-making. Two what extent are these impressions robust to multivariate analysis, and to what extent do the data conform to the specific intuitions presented above? 
+
+\section*{Results}
+
+	We present results of our four multivariate models in Table 5. Across the models, the results for a number of the personal characteristic variables are particularly consistent. The leftward gradient that emerged in the descriptive analysis holds up in the multivariate model. Left MEPs are more likely than right MEPs to be on Twitter, to be earlier adopters, to tweet frequently, and to engage dialogically with interlocutors. Similarly, MEP age matters. Specifically, age is negatively related to Twitter activity in all four models and reaches statistical significance in three of the four. Younger MEPs are not necessarily more likely to establish a Twitter presence before older MEPs. But the younger an MEP is, the more likely she is to have an account, to tweet frequently, and to make use of the @-reply functionality.
+	
+	Analysis of the other personal characteristics produces less straightforward results.  The notion that MEPs from inchoate party groups are less encumbered by party overseers and more likely to prioritize the construction of a personal brand  receives some support. Party group cohesion does not have a significant relationship to Twitter adoption or the timing of Twitter account establishment but is positively related to total tweet activity and the total number of @-replies. MEP gender is not a strong driver of Twitter activity. While the signs are positive in all models, the only model in which (female) gender reaches statistical significance is Twitter birthday.  The women MEPs who decide to establish Twitter accounts have generally done so before their male colleagues.  Once they are on Twitter, however, there is no evidence that men and women behave differently. More tenured MEPs are more likely to have established Twitter accounts, and there is no evidence that being outside of the EPP/S\&D/ALDE bloc is related to Twitter adoption or behavior.
+
+	Our findings on the relationship between constituency characteristics and MEP Twitter adoption and use are also mixed. Overall, they point to the robustness of the "northwest vs. southeast" gradient discussed above. The most consistent finding across the four constituency variables is that MEPs from more technologically advanced countries use Twitter and its various functionalities more than MEPs from countries at lower technological levels. District technology is not significant in the logistic regression model (column 1), but it is positive and significant in terms of total days on Twitter, total number of tweets, and total number of @-replies. 
+  
+  The effects of both median country age and press freedom are inconsistent across the four models and pose challenges to certain intuitions. MEPs from countries with lower median ages are less likely to have Twitter accounts and less likely to Tweet frequently than MEPs from countries with higher median ages. They are statistically more likely, however, to have established a Twitter account before MEPs from demographically older states. With regard to press freedom, while the evidence is mixed, the results provide more support for the idea that Twitter and a free press are complements than the notion that unmediated MEP-mass linkages on Twitter somehow compensate for a weak domestic press. MEPs from states with more press freedom are more likely to be on Twitter and more likely to Tweet frequently than MEPs from states with less press freedom, even if MEPs from the latter states are likely to have joined Twitter earlier.
+   
+	With respect to the two tested structural/strategic characteristics, there are a number of intriguing results. Comparative studies of twitter use among national MPs have found little to no electoral system effect. While there are differences in electoral system effects across the four models, the EP case does complicate this finding. We cannot conclude that MEPs from countries that use some form of personalized PR are more likely than MEPs from countries that use list PR to adopt Twitter earlier or to tweet more frequently. We can, however, notice that MEPs from personalized systems are more likely to have established an account \emph{and} to engage with interlocutors via @-replies.  The results also suggest that more endangered MEPs are more likely to tweet more often and to engage dialogically with interlocutors.  
+
+\section*{Discussion and Conclusions}
+
+	MEPs operate within one of the world's most dynamic legislatures. They routinely shape laws and policies that directly affect hundreds of millions of lives and indirectly affect billions of others. While their institution has gained significant power over the last 35 years, most MEPs still struggle to register on mass radars and to wrest the spotlight from national legislators who, in many cases, lack similar levels of influence. Twitter is one way that MEPs can fight against publicity, communications, and democratic deficits.  This paper has presented the first systematic analysis of MEPs' engagement with Twitter.
+
+	 Our multivariate models have generated insights into the specific personal, constituency-based, and structural/strategic factors that affect MEPs' adoption and use. In his study of Twitter use among US Members of Congress, Peterson concluded that "the large Republican effect on Twitter usage is the proverbial elephant in the room" \cite{peterson.2012}. Results from the EP, however, reinforce the findings from studies of national parliamentarians in Europe: legislators of the left are more likely to join Twitter, to adopt early, to tweet more, and to engage more than legislators of the right. Our other consistent finding relates to age: younger MEPs are particularly well-represented in the EP Twittersphere. A "northwest-southeast" axis is explicitly observed in our descriptive statistics and implied in the multivariate constituency findings.  Finally, there is some evidence that the structure of the electoral system and MEPs' sense of political threat affect Twitter behavior. 
+	 
+	 While these findings generate some insight into the nature of representation in the EP, the interface between parliamentarians and broader publics, and the development of political communication in the 21st century, there is ample room for additional study of MEPs on Twitter and other social media platforms. This paper has focused squarely on MEPs and their activities, leaving aside the question of who is following MEPs and what happens to MEPs' tweets once they are published. Closer analysis of the size and structures of MEPs' Twitter networks and the "afterlives" (e.g., through retweets and @-replies) of their tweets could generate significant insight into the structure and dynamics of the European public sphere. Future studies might also scrutinize the languages in which MEPs tweet; such analyses might give a stronger sense, in tandem with analyses of the users who follow MEPs and the users whom MEPs follow, of the cues to which MEPs respond and the audiences that MEPs aspire to reach.  
+	 
+	 This study's analysis of strategic factors has suggested that MEPs may take to Twitter in an effort to "right a sinking ship," and, by extension, that Twitter activity might drop off once an MEP's party recovers. There is ample room for further investigation of the timing and rhythms of MEPs' Twitter activity. Does MEP tweet activity follow the EU's rhythms? Does tweet frequency spike during plenary weeks or European Council meetings? Or does activity march to national rhythms? For example, do Danish MEPs tweet furiously in the run up to Danish national elections? In a slightly different extension, there is much to be gained by comparing MEPs to members of national parliaments.  Are their frequencies and styles similar or different, and why?  Answers to these kinds of questions would provide insights into the nature of Europe's multi-level polity and the distinctive models of representation and communication that distinguish MEPs from more familiar national politicians.
+	 
+	 Beyond the many research avenues that would effectively treat Twitter use or tweets as dependent variables, there are many potentially fecund questions that would inquire into the possible effects of Twitter use.  Does David Coburn's Twitter hyperactivity increase voters' familiarity with him? Does it increase citizen knowledge of the EP and/or the EU? Does it trigger more active engagement with other MEPs? With other EU institutions? With national politics? These are but a few of the questions that deserve future attention. 
+
+\hspace*{-1cm}
+% latex table generated in R 3.0.2 by xtable 1.7-4 package
+% Sun Oct 25 20:39:45 2015
+\begin{table}[H]
 \centering
-\begin{tabular}{rlrl}
+\caption{MEPs' Tweet Behavior} 
+\begin{tabular}{lll}
   \hline
- &  & Result & Corresponding MEP or count \\ 
+Item & Result & Corresponding MEP or count \\ 
   \hline
-1 & Number of MEPs using twitter & 570.00 & N/A \\ 
-  2 & Oldest twitter "birthday" & 13790.00 & Paolo DE CASTRO (S\&D, Italy) \\ 
-  3 & Youngest twitter "birthday" & 15994.00 & Georgios KATROUGKALOS (GUE-NGL, Greece) \\ 
-  4 & Mean twitter "birthday" & 14986.56 & N/A \\ 
-  5 & Min. number of tweets & 0.00 & 235 \\ 
-  6 & Max. number of tweets & 2828.00 & David COBURN (EFDD, United Kingdom) \\ 
-  7 & Mean number of tweets & 255.84 & N/A \\ 
-  8 & Median number of tweets & 141.50 & N/A \\ 
+Number of MEPs using twitter & 572 & N/A \\ 
+  Oldest twitter "birthday" & 2007-10-04 & Paolo DE CASTRO (S\&D, IT) \\ 
+  Youngest twitter "birthday" & 2014-07-25 & Jaromír ŠTĚTINA (EPP, CZ) \\ 
+  Mean twitter "birthday" & 2011-08-01 & N/A \\ 
+  Min. number of tweets per day (mean) & 0 & 232 \\ 
+  Max. number of tweets per day (mean) & 62.6 & David COBURN (EFDD, UK) \\ 
+  Total number of tweets (mean) & 294 & Martina DLABAJOVÁ (ALDE, CZ) \\ 
+  Total number of tweets (median) & 154.5 & Guy VERHOFSTADT (ALDE, BE) \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\hspace*{-1cm}
+
+% latex table generated in R 3.0.2 by xtable 1.7-4 package
+% Sun Oct 25 20:39:45 2015
+\begin{table}[H]
+\centering
+\caption{MEPs' Tweet Behavior by EP Party Group} 
+\begin{tabular}{lr}
+  \hline
+Party group & Median number of tweets per MEP per day \\ 
+  \hline
+Greens-EFA & 3.2 \\ 
+  GUE-NGL & 2.0 \\ 
+  EFDD & 1.8 \\ 
+  ALDE & 1.3 \\ 
+  S\&D & 1.2 \\ 
+  EPP & 0.5 \\ 
+  ECR & 0.4 \\ 
+  NI & 0.0 \\ 
    \hline
 \end{tabular}
 \end{table}
 
 
-% latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Thu Feb 12 13:57:48 2015
-\begin{table}[ht]
+% latex table generated in R 3.0.2 by xtable 1.7-4 package
+% Sun Oct 25 20:39:45 2015
+\begin{table}[H]
 \centering
-\begin{tabular}{rlr}
+\caption{MEPs' Tweet Behavior by Member State} 
+\begin{tabular}{lr}
   \hline
- & headers & output \\ 
+Member state & Median number of tweets per MEP per day \\ 
   \hline
-1 & Min. number of @-replies & 0.00 \\ 
-  2 & Max. number of @-replies & 818.00 \\ 
-  3 & Mean number of @-replies & 35.07 \\ 
-  4 & Median number of @-replies & 5.00 \\ 
+Ireland & 3.9 \\ 
+  United Kingdom & 3.4 \\ 
+  Netherlands & 3.4 \\ 
+  Sweden & 3.1 \\ 
+  Spain & 2.8 \\ 
+  Slovenia & 2.6 \\ 
+  Finland & 2.6 \\ 
+  Italy & 2.2 \\ 
+  Austria & 2.1 \\ 
+  Malta & 2.0 \\ 
+  Denmark & 1.9 \\ 
+  France & 1.3 \\ 
+  Belgium & 1.0 \\ 
+  Latvia & 0.9 \\ 
+  Czech Republic & 0.9 \\ 
+  Cyprus & 0.6 \\ 
+  Luxembourg & 0.4 \\ 
+  Germany & 0.1 \\ 
+  Croatia & 0.1 \\ 
+  Poland & 0.1 \\ 
+  Slovakia & 0.1 \\ 
+  Greece & 0.0 \\ 
+  Estonia & 0.0 \\ 
+  Romania & 0.0 \\ 
+  Bulgaria & 0.0 \\ 
+  Hungary & 0.0 \\ 
+  Lithuania & 0.0 \\ 
+  Portugal & 0.0 \\ 
    \hline
 \end{tabular}
 \end{table}
 
 
+
+% latex table generated in R 3.0.2 by xtable 1.7-4 package
+% Sun Oct 25 20:39:45 2015
+\begin{table}[H]
+\centering
+\caption{@-Replies by MEPs} 
+\begin{tabular}{lrl}
+  \hline
+Item & Result & Corresponding MEP or count \\ 
+  \hline
+Min. number of @-replies & 0.0 & 340 \\ 
+  Max. number of @-replies & 1403.0 & David COBURN (EFDD, UK) \\ 
+  Mean number of @-replies & 40.6 & Dominique RIQUET (ALDE, FR) \\ 
+  Median number of @-replies & 5.0 & 15 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+\begin{landscape}
+
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Sun, Oct 25, 2015 - 08:39:47 PM
+\begin{table}[!htbp] \centering 
+  \caption{Regression Results} 
+  \label{} 
+\footnotesize 
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{5}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-6} 
+\\[-1.8ex] & On Twitter & Twitter Birthday & Total Tweets & Total @-Replies & Total Retweets \\ 
+\\[-1.8ex] & \textit{logistic} & \textit{negative} & \textit{negative} & \textit{negative} & \textit{negative} \\ 
+ & \textit{} & \textit{binomial} & \textit{binomial} & \textit{binomial} & \textit{binomial} \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4) & (5)\\ 
+\hline \\[-1.8ex] 
+ District technology & 0.445 & 0.196$^{*}$ & 0.329$^{*}$ & 0.736$^{***}$ & 0.505$^{**}$ \\ 
+  & (0.334) & (0.106) & (0.185) & (0.232) & (0.229) \\ 
+  District wealth & 0.017$^{**}$ & $-$0.003 & 0.006 & 0.001 & 0.005 \\ 
+  & (0.008) & (0.002) & (0.004) & (0.005) & (0.005) \\ 
+  District age & $-$0.131$^{***}$ & 0.033$^{**}$ & $-$0.059$^{**}$ & $-$0.046 & $-$0.049 \\ 
+  & (0.050) & (0.016) & (0.028) & (0.035) & (0.035) \\ 
+  District press freedom & 0.043$^{**}$ & $-$0.015$^{**}$ & 0.032$^{**}$ & 0.001 & 0.043$^{***}$ \\ 
+  & (0.018) & (0.007) & (0.013) & (0.016) & (0.016) \\ 
+  MEP age & $-$0.033$^{***}$ & $-$0.002 & $-$0.015$^{**}$ & $-$0.022$^{***}$ & $-$0.012 \\ 
+  & (0.009) & (0.003) & (0.006) & (0.008) & (0.008) \\ 
+  MEP gender & 0.052 & 0.201$^{***}$ & 0.037 & 0.091 & 0.008 \\ 
+  & (0.191) & (0.073) & (0.127) & (0.159) & (0.156) \\ 
+  MEP tenure & 0.0002$^{***}$ & 0.00000 & $-$0.00004 & $-$0.0001$^{*}$ & $-$0.00004 \\ 
+  & (0.0001) & (0.00002) & (0.00003) & (0.00004) & (0.00004) \\ 
+  Left MEP & 0.465$^{**}$ & 0.186$^{**}$ & 0.297$^{**}$ & 0.453$^{***}$ & 0.422$^{***}$ \\ 
+  & (0.190) & (0.074) & (0.128) & (0.161) & (0.158) \\ 
+  Minority MEP & $-$0.166 & $-$0.012 & 0.150 & 0.008 & $-$0.0004 \\ 
+  & (0.216) & (0.084) & (0.146) & (0.183) & (0.180) \\ 
+  Inchoate MEP & 0.014 & $-$0.002 & 0.011$^{*}$ & 0.022$^{***}$ & 0.018$^{**}$ \\ 
+  & (0.009) & (0.004) & (0.006) & (0.008) & (0.008) \\ 
+  Endangered MEP & 0.015 & 0.0003 & 0.012$^{*}$ & 0.019$^{**}$ & 0.021$^{***}$ \\ 
+  & (0.010) & (0.004) & (0.006) & (0.008) & (0.008) \\ 
+  Electoral system & 0.907$^{***}$ & 0.067 & 0.202 & 0.372$^{**}$ & 0.117 \\ 
+  & (0.218) & (0.082) & (0.142) & (0.179) & (0.176) \\ 
+  Constant & 2.912 & 5.234$^{***}$ & 5.634$^{***}$ & 2.302 & 3.227$^{*}$ \\ 
+  & (2.536) & (0.909) & (1.584) & (1.991) & (1.958) \\ 
+ \hline \\[-1.8ex] 
+Observations & 751 & 567 & 572 & 572 & 572 \\ 
+Log Likelihood & $-$380.901 & $-$4,594.931 & $-$3,672.351 & $-$2,377.536 & $-$3,002.437 \\ 
+$\theta$ &  & 1.497$^{***}$  (0.081) & 0.489$^{***}$  (0.026) & 0.312$^{***}$  (0.018) & 0.320$^{***}$  (0.018) \\ 
+Akaike Inf. Crit. & 787.802 & 9,215.861 & 7,370.701 & 4,781.072 & 6,030.875 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{5}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table} 
+
+\end{landscape}
+
+\clearpage
+\bibliographystyle{apacite}
+\bibliography{references}
 
 \end{document}

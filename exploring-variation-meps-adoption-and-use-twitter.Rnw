@@ -7,6 +7,7 @@
 \usepackage{apacite}
 \usepackage{lscape}
 \usepackage{setspace}
+\usepackage{dcolumn}
 
 \begin{document}
 
@@ -401,10 +402,16 @@ replies_fit_glm_nb <- glm.nb(total_screen_name_replies ~ WEF_Global_IT_score_201
 #print(xtable(replies_fit_glm_nb, caption="Total @-Replies GLM Negative Binomial"), caption.placement="top", table.placement="H")
 @
 
-<<regression_table, cache=FALSE, echo=FALSE, message=FALSE, results='asis'>>=
-stargazer(on_twitter_logit, twitter_birthday_glm_nb, total_tweets_fit_glm_nb, replies_fit_glm_nb, title="Regression Results", covariate.labels=c("District technology", "District wealth", "District age", "District press freedom", "MEP age", "MEP gender", "MEP tenure","Left MEP", "Minority MEP", "Inchoate MEP", "Endangered MEP", "Electoral system"), dep.var.labels=c("On Twitter", "Twitter Birthday", "Total Tweets", "Total @-Replies"), no.space=TRUE)
+<<retweets_fit, cache=FALSE, echo=FALSE, message=FALSE>>=
+library("MASS")
+retweets_fit_glm_nb <- glm.nb(total_retweets ~ WEF_Global_IT_score_2014 + GDP_per_capita_PPS_2013 + Median_age_2014 + Press_freedom_2014 + num_born + factor(gender) + days_served + factor(right_left) + minority_mep + internal_cohesion_score_2009.2014 + share_2009.share_2014 + Electoral_system, data=tweeters)
 @
-
+\clearpage
+\begin{landscape}
+<<regression_table, cache=FALSE, echo=FALSE, message=FALSE, results='asis', out.extra="style='transform:rotate(90deg);'">>=
+stargazer(on_twitter_logit, twitter_birthday_glm_nb, total_tweets_fit_glm_nb, replies_fit_glm_nb, retweets_fit_glm_nb, title="Regression Results", covariate.labels=c("District technology", "District wealth", "District age", "District press freedom", "MEP age", "MEP gender", "MEP tenure","Left MEP", "Minority MEP", "Inchoate MEP", "Endangered MEP", "Electoral system"), dep.var.labels=c("On Twitter", "Twitter Birthday", "Total Tweets", "Total @-Replies", "Total Retweets"), no.space=TRUE, font.size = 'footnotesize')
+@
+\end{landscape}
 
 \clearpage
 \bibliographystyle{apacite}

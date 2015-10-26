@@ -10,3 +10,10 @@
 .Rproj.user
 packrat/lib*/
 packrat/src/
+
+*.pyc
+/cache
+*.log
+*.xml
+/figure
+*.tex

@@ -1,11 +1,11 @@
 from pymongo import MongoClient
 import re
+import os
 import csv
 from bson.objectid import ObjectId
-from settings import username, password
 
 client = MongoClient('research.jmu.rocks')
-client.admin.authenticate(username, password)
+client.admin.authenticate(os.environ['MONGO_USER'], os.environ['MONGO_PASSWORD'])
 db = client.eu_miner
 
 csvs = ['hypotheses_1_2_3_4_12.csv', 'share.csv', 'tenure.csv', 'right_left.csv', 'internal_cohesion.csv']
@@ -82,7 +82,7 @@ def output_reduced():
 
 
 def code_lang_manuel():
-    csv_file = '/home/jwohlgemuth/eu-twitter-analysis/tweet_lang_manual.csv'
+    csv_file = '/home/jerry/eu-twitter-analysis/tweet_lang_manual.csv'
     with open(csv_file, 'r') as infile:
         reader = csv.reader(infile, delimiter=',')
         reader.next()
@@ -93,7 +93,7 @@ def code_lang_manuel():
 
 
 def code_lang_api():
-    csv_file = '/home/jwohlgemuth/eu-twitter-analysis/tweet_lang_api.csv'
+    csv_file = '/home/jerry/eu-twitter-analysis/tweet_lang_api.csv'
     with open(csv_file, 'r') as infile:
         reader = csv.reader(infile, delimiter=',')
         reader.next()
@@ -104,8 +104,8 @@ def code_lang_api():
 
 
 def code_mep_lang():
-    mep_csv = '/home/jwohlgemuth/eu-twitter-analysis/mep_lang.csv'
-    code_csv = '/home/jwohlgemuth/eu-twitter-analysis/language_codes.csv'
+    mep_csv = '/home/jerry/eu-twitter-analysis/mep_lang.csv'
+    code_csv = '/home/jerry/eu-twitter-analysis/language_codes.csv'
     codes = {}
     with open(code_csv, 'r') as infile:
         reader = csv.reader(infile, delimiter=',')
@@ -122,7 +122,7 @@ def code_mep_lang():
 
 
 def update_handles_birthdays():
-    with open('/home/jwohlgemuth/eu-twitter-analysis/updated_handles_birthdays.csv', 'r') as infile:
+    with open('/home/jerry/eu-twitter-analysis/updated_handles_birthdays.csv', 'r') as infile:
         reader = csv.reader(infile, delimiter=',')
         reader.next()
         for row in reader:
